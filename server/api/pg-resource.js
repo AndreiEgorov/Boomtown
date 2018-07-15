@@ -103,7 +103,8 @@ module.exports = function (postgres) {
          *  to your query text using string interpolation
          */
 
-        text: `select*from items ${idToOmit ? 'WHERE items.ownderid != $1' : ''}`,
+
+        text: `select*from items ${idToOmit ? `WHERE ownerid != $1 and borrowerid is null` : ''}`,
         values: idToOmit ? [idToOmit] : []
       })
       return items.rows
@@ -126,7 +127,7 @@ module.exports = function (postgres) {
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
          */
-        text: `select * from items where items.borrowerid = $1`,
+        text: `select * from items where borrowerid = $1`,
         values: [id]
       })
       return items.rows
