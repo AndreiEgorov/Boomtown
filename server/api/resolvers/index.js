@@ -151,14 +151,20 @@ module.exports = function (app) {
         }
         // -------------------------------
       },
-      // async borrower() {
-      //   /**
-      //    * @TODO: Replace this mock return statement with the correct user from Postgres
-      //    * or null in the case where the item has not been borrowed.
-      //    */
-      //   return null
-      //   // -------------------------------
-      // },
+      async borrower(parent, args, { pgResource }, info) {
+        /**
+         * @TODO: Replace this mock return statement with the correct user from Postgres
+         * or null in the case where the item has not been borrowed.
+         */
+        try {
+          const user = await pgResource.getUserById(parent.borrowerid)
+          return user
+
+        } catch (e) {
+          throw new ApolloError(e)
+        }
+        // -------------------------------
+      },
       // async imageurl({ imageurl, imageid, mimetype, data }) {
       //   if (imageurl) return imageurl
       //   if (imageid) {
