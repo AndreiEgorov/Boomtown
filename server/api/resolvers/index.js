@@ -21,7 +21,7 @@ const { ApolloError } = require('apollo-server')
 // -------------------------------
 const { UploadScalar, DateScalar } = require('../custom-types')
 
-module.exports = function (app) {
+module.exports = function(app) {
   return {
     Upload: UploadScalar,
     // Date: DateScalar,
@@ -48,8 +48,6 @@ module.exports = function (app) {
         try {
           const user = await pgResource.getUserById(id)
           return user
-
-
         } catch (e) {
           throw new ApolloError(e)
         }
@@ -69,7 +67,6 @@ module.exports = function (app) {
         try {
           const tags = await pgResource.getTags()
           return tags
-
         } catch (e) {
           throw new ApolloError(e)
         }
@@ -94,24 +91,19 @@ module.exports = function (app) {
         try {
           const items = pgResource.getItemsForUser(parent.id)
           return items
-
         } catch (e) {
           throw new ApolloError(e)
         }
       },
 
-
       borrowed(parent, args, { pgResource }, info) {
         //   // @TODO: Replace this mock return statement with the correct items from Postgres
         try {
           const borrowed = pgResource.getBorrowedItemsForUser(parent.id)
-          return borrowed;
-        }
-        catch (e) {
+          return borrowed
+        } catch (e) {
           throw new ApolloError(e)
         }
-
-
       }
       // -------------------------------
     },
@@ -133,7 +125,6 @@ module.exports = function (app) {
         try {
           const owner = await pgResource.getUserById(parent.ownerid)
           return owner
-
         } catch (e) {
           throw new ApolloError(e)
         }
@@ -144,7 +135,6 @@ module.exports = function (app) {
         try {
           const tags = await pgResource.getTagsForItem(parent.id)
           return tags
-
         } catch (e) {
           throw new ApolloError(e)
         }
@@ -158,12 +148,11 @@ module.exports = function (app) {
         try {
           const user = await pgResource.getUserById(parent.borrowerid)
           return user
-
         } catch (e) {
           throw new ApolloError(e)
         }
         // -------------------------------
-      },
+      }
       // async imageurl({ imageurl, imageid, mimetype, data }) {
       //   if (imageurl) return imageurl
       //   if (imageid) {

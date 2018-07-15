@@ -13,7 +13,7 @@ const { gql } = require('apollo-server')
 module.exports = gql`
   scalar Upload
   scalar Date
-  
+
   type Item {
     id: ID!
     title: String!
@@ -24,22 +24,20 @@ module.exports = gql`
     created: Date
     borrower: User
   }
-  
+
   type User {
     id: ID!
     email: String!
     fullname: String!
-    bio:String
+    bio: String
     items: [Item]
     borrowed: [Item]
   }
-  
 
   type Tag {
     id: ID!
     title: String!
   }
-
 
   type File {
     id: ID!
@@ -54,7 +52,6 @@ module.exports = gql`
     title: String!
   }
 
-
   input AssignedBorrower {
     id: ID!
   }
@@ -65,8 +62,6 @@ module.exports = gql`
     tags: AssignedTag
   }
 
-
-
   type Query {
     user(id: ID!): User
     viewer: User
@@ -74,11 +69,7 @@ module.exports = gql`
     tags: [Tag]
   }
 
-
   type Mutation {
-    addItem(
-      item: NewItemInput!
-      image: Upload
-    ):Item
+    addItem(item: NewItemInput!, image: Upload): Item
   }
 `

@@ -10,14 +10,14 @@ function tagsQueryString(tags, itemid, result) {
   return length === 0
     ? `${result};`
     : tags.shift() &&
-    tagsQueryString(
-      tags,
-      itemid,
-      `${result}($${tags.length + 1}, ${itemid})${length === 1 ? '' : ','}`
-    )
+        tagsQueryString(
+          tags,
+          itemid,
+          `${result}($${tags.length + 1}, ${itemid})${length === 1 ? '' : ','}`
+        )
 }
 
-module.exports = function (postgres) {
+module.exports = function(postgres) {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
@@ -103,8 +103,9 @@ module.exports = function (postgres) {
          *  to your query text using string interpolation
          */
 
-
-        text: `select*from items ${idToOmit ? `WHERE ownerid != $1 and borrowerid is null` : ''}`,
+        text: `select*from items ${
+          idToOmit ? `WHERE ownerid != $1 and borrowerid is null` : ''
+        }`,
         values: idToOmit ? [idToOmit] : []
       })
       return items.rows
@@ -139,8 +140,6 @@ module.exports = function (postgres) {
 
     async getTagsForItem(id) {
       const tagsQuery = {
-
-
         text: `SELECT id,title,itemtags from itemtags INNER JOIN tags on itemtags.tagid = tags.id where itemid = $1;`, // @TODO: Advanced queries
         values: [id]
       }
@@ -148,7 +147,6 @@ module.exports = function (postgres) {
       const tags = await postgres.query(tagsQuery)
       return tags.rows
     },
-
 
     //IGNOMRE THIS BOY SDFDSF
     async saveNewItem({ item, image, user }) {

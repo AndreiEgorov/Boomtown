@@ -5,7 +5,7 @@ const { makeExecutableSchema } = require('graphql-tools')
 const typeDefs = require('../api/schema')
 let resolvers = require('../api/resolvers')
 
-module.exports = function ({ app, pgResource }) {
+module.exports = function({ app, pgResource }) {
   resolvers = resolvers(app)
 
   /**
@@ -21,9 +21,8 @@ module.exports = function ({ app, pgResource }) {
   // @TODO: Refactor to use 'makeExecutableSchema' to wire up your schema to your resolvers:
   const schema = makeExecutableSchema({
     typeDefs,
-    resolvers, // optional
-
-  });
+    resolvers // optional
+  })
   // -------------------------------
 
   const apolloServer = new ApolloServer({
