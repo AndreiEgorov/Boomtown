@@ -132,8 +132,8 @@ module.exports = function (app) {
       async itemowner(parent, id, { pgResource }, info) {
         // @TODO: Replace this mock return statement with the correct user from Postgres
         try {
-          const items = await pgResource.getItemsForUser(id)
-          return items
+          const owner = await pgResource.getUserById(parent.ownerid)
+          return owner
 
         } catch (e) {
           throw new ApolloError(e)
