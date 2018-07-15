@@ -4,14 +4,12 @@ const express = require('express')
 const fallback = require('express-history-api-fallback')
 const path = require('path')
 
-module.exports = function (app) {
+module.exports = function(app) {
   const PORT = process.env.PORT || 8080
   app.set('PG_HOST', process.env.PG_HOST || 'localhost')
   app.set('PG_USER', process.env.PG_USER || 'boomtown')
   app.set('PG_PASSWORD', process.env.PG_PASSWORD || 'boomtown')
   app.set('PG_DB', process.env.PG_DB || 'boomtown')
-
-
 
   /**
    *  @TODO: Configuration Variables
