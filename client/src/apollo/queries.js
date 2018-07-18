@@ -38,38 +38,84 @@ const ItemFields = gql`
   }
 
 `
-export const ITEM_QUERY = gql`
-  query  items($filter:ID!){
-   items(filter:$filter){
-    ...ItemFields
-   }
-   
-  }
-  ${ItemFields}
-`
 
-// export const ALL_ITEMS_QUERY = gql`
-//   query items($filter: ID) {
-
+//query #1 ITEM_QUERY - ?
+//how is it different from #2?
+// # @TODO: Query an item by its id and return the ItemFields fragment.
+// export const ITEM_QUERY = gql`
+//    query item($id: ID!){
+//    
 //     ...ItemFields
-//     # @TODO: Query items (optionally by tag id) and return the ItemFields fragment.
+//    
+
 //   }
 //   ${ItemFields}
 // `
+//-------------------
 
-// export const ALL_USER_ITEMS_QUERY = gql`
-//   query user($id: ID!) {
-//     # @TODO: Query the bio, email, fullname, items, and borrowed for the user by id
-//     # Use the ItemFields fragment for the items and borrowed fields.
-//   }
-//   ${ItemFields}
-// `
 
-// export const ALL_TAGS_QUERY = gql`
-//   query {
-//     # @TODO: Query the id and title fields for tags.
-//   }
-// `
+//query #2 ALL_ITEMS_QUERY - works
+//Displays all items that are not users and are not borrowed
+export const ALL_ITEMS_QUERY = gql`
+    query items($filter: ID!) {
+      items(filter:$filter){
+        ...ItemFields
+      }
+
+      # @TODO: Query items (optionally by tag id) and return the ItemFields fragment.
+    }
+    ${ItemFields}
+  `
+//-------------------
+
+//query #3 ALL_USER_ITEMS_QUERY - works
+//Displays all items that belong to a user and items borrowed by user
+//how to apply  ${ItemFields} here?
+export const ALL_USER_ITEMS_QUERY = gql`
+  query user($id: ID!) {
+    user(id:$id){
+     bio
+     email
+     fullname
+
+     items{
+       id
+       imageurl
+       description
+     }
+     borrowed{
+      id
+      title
+      imageurl
+      description
+    	created
+    }
+
+    # @TODO: Query the bio, email, fullname, items, and borrowed for the user by id
+    # Use the ItemFields fragment for the items and borrowed fields.
+  }
+}
+`
+//-------------------
+
+
+
+//query #4 ALL_TAGS_QUERY - works
+//Displays all items that belong to a user and items borrowed by user
+export const ALL_TAGS_QUERY = gql`
+  query {
+    tags{
+      id
+      title
+    }
+
+    # @TODO: Query the id and title fields for tags.
+  }
+`
+//-------------------
+
+
+
 
 // export const ADD_ITEM_MUTATION = gql`
 //   mutation addItem($item: NewItemInput!, $image: Upload!) {

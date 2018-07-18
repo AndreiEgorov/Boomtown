@@ -16,20 +16,34 @@ import {
 const itemsData = ({ render }) => {
   /**
    * @TODO: Use Apollo's <Query /> component to fetch all the items.
-   *
-   * Note: Your query will need to filter out borrowed items.
+   */
+
+  return (
+    <Query query={ALL_ITEMS_QUERY} variables={{ filter: null }}>
+      {({ data: { items }, loading, error }) => render({ items, loading, error })
+      }}
+    </Query>
+  );
+
+  /* Note: Your query will need to filter out borrowed items.
    *
    * The final query will ultimately filter out items that belong to the
    * currently logged-in user once you have added authentication.
    */
-  return undefined
+
 }
 
 const userItemsData = ({ userId, render }) => {
   /**
    * @TODO: Use Apollo's <Query /> component to fetch all of a user's items.
-   *
-   * Note: Your query will need to retrieve only items that belong to a
+   */
+  return (
+    <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: null }}>
+      {({ data: { user }, loading }) => render({ user, loading })//user, bcs they user is a name of the query
+      }}
+    </Query>
+  );
+  /* Note: Your query will need to retrieve only items that belong to a
    * specific user id.
    */
   return undefined
@@ -54,7 +68,7 @@ const addItem = ({ render }) => {
 const ItemsContainer = adopt({
   // @TODO: Uncomment each line as you write the corresponding query.
   // tagData,
-  // itemsData,
+  itemsData,
   // userItemsData,
   // addItem
   // -------------------------------
