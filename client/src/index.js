@@ -15,14 +15,14 @@ import theme from './theme'
  * @TODO: Initialize Apollo Client
  *
  * Uncomment the following line when Apollo Client is configured:
- *
- * import client from './apollo'
- *
- * Below in your <App />, wrap your pages in an <ApolloProvider /> component
- * and pass it `client` as the `client` prop value so they will
- * have access to data exposed by your GraphQL API.
  */
-
+import client from './apollo'
+/*
+* Below in your <App />, wrap your pages in an <ApolloProvider /> component
+* and pass it `client` as the `client` prop value so they will
+* have access to data exposed by your GraphQL API.
+*/
+import { ApolloProvider } from "react-apollo";
 /**
  * @TODO: Add Routing
  *
@@ -58,16 +58,21 @@ import theme from './theme'
 
 // @TODO: Remove this import once you have your router working below
 import Home from './pages/Home'
+
+
+
 // -------------------------------
 
 import './index.css'
 
 const App = () => {
   return (
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Home />
-    </MuiThemeProvider>
+    <ApolloProvider client={client}>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Home />
+      </MuiThemeProvider>
+    </ApolloProvider>
   )
 }
 
