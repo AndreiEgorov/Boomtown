@@ -79,21 +79,15 @@ export const ALL_USER_ITEMS_QUERY = gql`
      fullname
 
      items{
-       id
-       imageurl
-       description
+       ...ItemFields
      }
      borrowed{
-      id
-      title
-      imageurl
-      description
-    	created
+      ...ItemFields
     }
-
     # @TODO: Query the bio, email, fullname, items, and borrowed for the user by id
     # Use the ItemFields fragment for the items and borrowed fields.
   }
+  ${ItemFields}
 }
 `
 //-------------------

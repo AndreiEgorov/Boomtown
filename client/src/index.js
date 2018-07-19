@@ -56,8 +56,7 @@ import Routes from './routes/index'
  * user is currently logged in and who that user is.
  */
 
-// @TODO: Remove this import once you have your router working below
-import Home from './pages/Home'
+
 
 
 
@@ -73,7 +72,6 @@ const App = () => {
         <BrowserRouter>
           <Routes />
         </BrowserRouter>
-
       </MuiThemeProvider>
     </ApolloProvider>
   )
