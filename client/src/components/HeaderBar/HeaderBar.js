@@ -10,10 +10,26 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreVert from '@material-ui/icons/MoreVert';
 import BoomtownLogo from '../../images/boomtown.svg';
+import ShareButton from './../ShareButton';
+
+
+import { Link } from 'react-router-dom'
 
 
 
 const styles = {
+   
+
+    toolbar:{
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+
+    twoButtonsWrapper:{
+        display: 'flex',
+    alignItems: 'center',
+    },
+
     root: {
         flexGrow: 1,
     },
@@ -31,12 +47,19 @@ function HeaderBar(props) {
     return (
         <div className={classes.root}>
             <AppBar position="static" title={<img src='boomtown.svg' />}>
-                <Toolbar>
-                    <img src={BoomtownLogo} style={{ width: "100" }} alt='Boomtown Logo' />
-                    <Button color="inherit">Login</Button>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                        <MoreVert />
-                    </IconButton>
+                <Toolbar className={classes.toolbar}>
+                    <div>
+                        <a href="/items">
+                        <img src={BoomtownLogo} style={{ width: "40px" }} alt='Boomtown Logo' />
+                        </a>
+                    </div>
+                    <div className={classes.twoButtonsWrapper}>
+                        <ShareButton />
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                            <MoreVert />
+                        </IconButton>
+                    </div>
+
                 </Toolbar>
             </AppBar>
         </div>
