@@ -10,28 +10,32 @@ import styles from './styles'
 
 import ItemsContainer from '../../containers/ItemsContainer';
 import HeaderBar from '../../components/HeaderBar';
-
+import ItemCard from '../../components/ItemCard';
 
 
 
 const Items = ({ classes }) => {
   return (
     <div>
-      <HeaderBar />
+      <HeaderBar/>
+      
       <ItemsContainer>
-
+      
         {({ itemsData: { data, loading, error } }) => {
           if (loading) return '...loading'
           if (error) return '...error'
-          return data.items.map((item, index) => <div key={index}>
-            <h2>{item.title}</h2>
-            <p>{item.tags.map(tag => tag.title)}</p>
-            <p>{item.description}</p>
+          const items = data.items
+          return items.map((item, index) => <div key={index}>
+            <ItemCard item={item}/>
           </div>)
-          console.log(data)
         }
+
+        
+
         }
+        
       </ItemsContainer>
+      
     </div>
   )
 }
