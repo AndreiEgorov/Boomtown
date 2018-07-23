@@ -14,8 +14,10 @@ import red from '@material-ui/core/colors/red'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import BorrowButton from './BorrowButton'
 
 const styles = theme => ({
+  
   card: {
     textAlign: 'left'
   },
@@ -58,6 +60,7 @@ const ItemCard = ({ classes, item }) => {
           </Typography>
           <Typography variant="subheading">{item.description}</Typography>
         </CardContent>
+        <BorrowButton />
       </Card>
     </div>
   )
