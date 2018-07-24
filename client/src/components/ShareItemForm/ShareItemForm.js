@@ -3,7 +3,11 @@ import React, { Component } from 'react'
 import { FormSpy, Form, Field } from 'react-final-form'
 import { connect } from 'react-redux'
 import ItemsContainer from '../../containers/ItemsContainer'
-import { MenuItem } from '../../../node_modules/@material-ui/core'
+import {
+  MenuItem,
+  Select,
+  Checkbox
+} from '../../../node_modules/@material-ui/core'
 import Menu from '@material-ui/core/Menu'
 
 import ShareItemCard from './ShareItemCard'
@@ -28,6 +32,19 @@ class ShareItemForm extends Component {
       selectedTags: [],
       submitted: false
     }
+  }
+
+  handleCheckbox(event) {
+    this.setState({
+      selectedTags: event.target.value
+    })
+  }
+
+  generateTagsText(tags, selected) {
+    return tags
+      .map(t => (selected.indexOf(t.id) > -1 ? t.title : false))
+      .filter(e => e)
+      .join(', ')
   }
 
   getData(input) {
@@ -85,7 +102,7 @@ class ShareItemForm extends Component {
               <h1>Share. Borrow. Prosper.</h1>
               <SelectImageButton />
               <Form
-                onSubmit={this.onSubmit}
+                onSubmit={onSubmit}
                 //  validate={}
                 render={({ handleSubmit, pristine, invalid, values }) => (
                   <form onSubmit={handleSubmit}>
@@ -99,7 +116,7 @@ class ShareItemForm extends Component {
                       }}
                     />
                     <Field
-                      name="itemName"
+                      name="title"
                       render={({ input, meta }) => (
                         <div>
                           <input {...input} placeholder="Name your Item" />
@@ -110,7 +127,7 @@ class ShareItemForm extends Component {
                     />
 
                     <Field
-                      name="itemDescription"
+                      name="description"
                       render={({ input, meta }) => (
                         <div>
                           <textarea
@@ -123,14 +140,28 @@ class ShareItemForm extends Component {
                       )}
                     />
                     <lable>Add some tags</lable>
-                    <Field name="itemTags" component="select">
+
+                    <Select
+                      multiple
+                      value={this.state.selectedTags}
+                      onChange={e => this.handleCheckbox(e)}
+                      renderValue={selected => {
+                        return this.generateTagsText(tags, selected)
+                      }}
+                    >
                       {tags &&
                         tags.map(tag => (
-                          <option key={tag.id} value={tag.title}>
+                          <MenuItem key={tag.id} value={tag.id}>
+                            <Checkbox
+                              checked={
+                                this.state.selectedTags.indexOf(tag.id) > -1
+                              }
+                            />
+                            {/* <ListItemText primary={tag.title} /> */}
                             {tag.title}
-                          </option>
+                          </MenuItem>
                         ))}
-                    </Field>
+                    </Select>
                   </form>
                 )}
               />

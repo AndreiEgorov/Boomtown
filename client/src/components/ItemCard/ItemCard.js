@@ -19,9 +19,11 @@ import BorrowButton from './BorrowButton'
 const styles = theme => ({
   
   card: {
-    textAlign: 'left'
+    textAlign: 'left',
+    width: "400px",
   },
   media: {
+    
     height: 0,
     paddingTop: '56.25%', // 16:9
     backgroundColor: 'blue'
@@ -40,8 +42,8 @@ const ItemCard = ({ classes, item }) => {
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Contemplative Reptile"
+          image={item.imageUrl}
+          
         />
         <CardHeader
           avatar={
