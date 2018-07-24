@@ -46,15 +46,19 @@ const userItemsData = ({ userId, render }) => {
    * specific user id.
    */
 }
-
 const tagData = ({ render }) => {
+
   /**
    * @TODO: Use Apollo's <Query /> component to fetch all the tags.
    */
-  return (<Query query={ALL_TAGS_QUERY} variables={{ filter: null }}>
-    {({ data: { items }, loading, error }) => render({ items, loading, error })
-    }
-  </Query>)
+  return (
+    <Query query={ALL_TAGS_QUERY}>
+      {({ data, loading, error }) => render({ data, loading, error })}
+    </Query>
+  );
+ 
+
+ 
 }
 
 const addItem = ({ render }) => {
@@ -70,7 +74,7 @@ const ItemsContainer = adopt({
   // @TODO: Uncomment each line as you write the corresponding query.
   itemsData,
   //userItemsData,
-  //tagData,
+  tagData,
 
 
   // addItem
