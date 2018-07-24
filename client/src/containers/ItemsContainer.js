@@ -53,7 +53,7 @@ const tagData = ({ render }) => {
    */
   return (
     <Query query={ALL_TAGS_QUERY}>
-      {({ data, loading, error }) => render({ data, loading, error })}
+      {({ data: {tags}, loading, error }) => render({ tags, loading, error })}
     </Query>
   );
  
@@ -75,8 +75,6 @@ const ItemsContainer = adopt({
   itemsData,
   //userItemsData,
   tagData,
-
-
   // addItem
   // -------------------------------
 })

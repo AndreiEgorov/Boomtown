@@ -15,9 +15,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import BorrowButton from './../../ItemCard/BorrowButton'
+import ItemCard from './../../ItemCard/'
+
+
+import {connect} from 'react-redux';
 
 const styles = theme => ({
-  
   card: {
     textAlign: 'left',
     maxWidth: '400px'
@@ -25,8 +28,7 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-    backgroundColor: 'grey',
-  
+    backgroundColor: 'grey'
   },
 
   avatar: {
@@ -34,44 +36,60 @@ const styles = theme => ({
   }
 })
 
-const ShareItemCard = ({ classes, item }) => {
-  console.log(item)
+// const item = {
+//   itemwoner: {
+//     fullname: 'Item Owner Name'
+//   },
+//   title: 'Name your item',
+//   tags:[],
+//   description: 'Describe your item'
+// }
 
-  return (
-    <div>
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Contemplative Reptile"
-        />
-        
-     
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
-            </Avatar>
-          }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
-        />
-
-        <CardContent>
-          <Typography variant="title">{''}</Typography>
-          <Typography variant="body1">
-            {''}
-          </Typography>
-          <Typography variant="subheading">{''}</Typography>
-        </CardContent>
-        <BorrowButton />
-      </Card>
-    </div>
+const ShareItemCard =(props ) => {
+  return(
+    <ItemCard item={props.shareItemPreview}/>
   )
 }
+
+
+// const ShareItemCard = ({ classes, item }) => {
+//   return (
+//     <div>
+//       <Card className={classes.card}>
+//         <CardMedia
+//           className={classes.media}
+//           image="/static/images/cards/paella.jpg"
+//           title="Contemplative Reptile"
+//         />
+
+//         <CardHeader
+//           avatar={
+//             <Avatar aria-label="Recipe" className={classes.avatar}>
+//               R
+//             </Avatar>
+//           }
+//           title="Shrimp and Chorizo Paella"
+//           subheader="September 14, 2016"
+//         />
+
+//         <CardContent>
+//           <Typography variant="title">{''}</Typography>
+//           <Typography variant="body1">{''}</Typography>
+//           <Typography variant="subheading">{''}</Typography>
+//         </CardContent>
+//         <BorrowButton />
+//       </Card>
+//     </div>
+//   )
+// }
 
 ShareItemCard.propTypes = {
   classes: PropTypes.object.isRequired
 }
+const mapStateToProps = state => {
+  return {
+    shareItemPreview: state.shareItemPreview,
+  }
+}
 
-export default withStyles(styles)(ShareItemCard)
+export default connect(mapStateToProps)(withStyles(styles)(ShareItemCard))
