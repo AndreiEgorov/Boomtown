@@ -13,7 +13,7 @@ import SelectImageButton from './SelectImageButton/SelectImageButton'
 
 
 const validate = values => {}
-const onSubmit = values => {}
+const onSubmit = values => {console.log(values.itemName)}
 class ShareForm extends Component {
   constructor(props) {
     super(props)
@@ -34,7 +34,7 @@ class ShareForm extends Component {
         <h1>Share. Borrow. Prosper.</h1>
         <SelectImageButton/>
         <Form
-          //  onSubmit={}
+           onSubmit={onSubmit}
           //  validate={}
           render={({ handleSubmit, pristine, invalid, values }) => (
             <form onSubmit={handleSubmit}>
@@ -47,7 +47,7 @@ class ShareForm extends Component {
                   </div>
                 )}
               />
-
+ 
               <Field
                 name="itemDescription"
                 render={({ input, meta }) => (
@@ -73,7 +73,7 @@ class ShareForm extends Component {
                       {({ tagData: { data, loading, error } }) => {
                         if (loading) return '...loading'
                         if (error) return '...error'
-                        console.log(data)
+                        {/* console.log(data) */}
                         const tags = data.tags
                         return tags.map((tag, index) => (
                           <option key={index} value={tag.title}>{tag.title}</option>
