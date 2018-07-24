@@ -63,10 +63,7 @@ class ShareForm extends Component {
                 component="select"
                 >
                
-          
-                  
-                
-              </Field>
+             
               
                 
                    <ItemsContainer>
@@ -75,14 +72,14 @@ class ShareForm extends Component {
                         if (error) return '...error'
                         {/* console.log(data) */}
                         const tags = data.tags
-                        return tags.map((tag, index) => (
-                          <option key={index} value={tag.title}>{tag.title}</option>
+                        return tags.map((tag) => (
+                          <option key={tag.id} value={tag.title}>{tag.title}</option>
                         ))
 
                       }}
                     </ItemsContainer>
 
-            
+             </Field>
             </form>
           )}
          
