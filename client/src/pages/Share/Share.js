@@ -1,25 +1,40 @@
-import { withStyles } from '@material-ui/core/styles'
-
 import React from 'react'
+import { withStyles,Grid } from '@material-ui/core'
+
 
 import styles from './styles'
-
 
 import ShareItemForm from './../../components/ShareItemForm/ShareItemForm'
 // import ShareItemPreview from '../../redux/modules/ShareItemPreview';
 import ShareItemCard from './../../components/ShareItemForm/ShareItemCard'
 
-const Share = ({ classes }) => {
-  return (
-    <div>
-      <ShareItemCard/>
-      <ShareItemForm/>
 
-      <p>
-        This is the share page located at <code>/share</code>.
-      </p>
-    </div>
-  )
+
+
+
+class Share extends React.Component{
+render(){
+  const { classes } = this.props;
+  return(
+  <Grid container
+          justify="center"
+       alignItems="center"
+       className={classes.sharePageGrid}
+       
+>
+        <Grid item xs={6} >
+        
+          <ShareItemCard />
+          </Grid>
+          <Grid item xs={6} >
+          <ShareItemForm />
+          </Grid>
+
+     </Grid>
+);
 }
-
+}
 export default withStyles(styles)(Share)
+
+ 
+
