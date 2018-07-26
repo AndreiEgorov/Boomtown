@@ -7,18 +7,12 @@ let resolvers = require('../api/resolvers')
 const {AuthDirective} =  require('../api/custom-directives')
 module.exports = function ({ app, pgResource }) {
   resolvers = resolvers(app)
-
   /**
-   * Andrei's Comments: Initialize Apollo Server
-   *
-   * Once you've defined your schema types, it's time to wire up your schema
-   * to your resolving functions. This is Apollo magic, and it's done using
-   * the 'makeExecutableSchema' function provided by the 'graphql-tools' package.
-   *
-   * https://www.apollographql.com/docs/apollo-server/v2/api/graphql-tools.html#makeExecutableSchema
+   * Andrei's Comments:  makeExecutableSchema is used to  Initialize Apollo Server
+   * Once the schema types are defined, it's time to wire up the schema
+   * to the resolving functions. The 'makeExecutableSchema' function is provided by the 'graphql-tools' package.
    */
 
-  // @TODO: Refactor to use 'makeExecutableSchema' to wire up your schema to your resolvers:
   const schema = makeExecutableSchema({
     typeDefs,
     resolvers,

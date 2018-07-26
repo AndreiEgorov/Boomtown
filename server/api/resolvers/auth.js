@@ -96,7 +96,7 @@ module.exports = function(app) {
          *  they submitted from the login form to decrypt the 'hashed' version stored in out database.
          */
         // Use bcrypt to compare the provided password to 'hashed' password stored in your database.
-        const valid = false
+        const valid = await bcrypt.compare(args.user.password, user.password)
         // -------------------------------
         if (!valid || !user) throw 'User was not found.'
 
