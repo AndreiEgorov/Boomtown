@@ -18,6 +18,10 @@ function setCookie({ tokenName, token, res }) {
    */
   // Refactor this method with the correct configuration values.
   res.cookie(tokenName, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000*60*60*2 
+
     // @TODO: Supply the correct configuration values for our cookie here
   })
   // -------------------------------
@@ -26,7 +30,7 @@ function setCookie({ tokenName, token, res }) {
 function generateToken(user, secret) {
   const { id, email, fullname, bio } = user // Omit the password from the token
   /**
-   *  @TODO: Authentication - Server
+   *  @done: Authentication - Server
    *
    *  This helper function is responsible for generating the JWT token.
    *  Here, we'll be taking a JSON object representing the user (the 'J' in JWT)
@@ -35,7 +39,9 @@ function generateToken(user, secret) {
    *  which can be decoded using the app secret to retrieve the stateless session.
    */
   // Refactor this return statement to return the cryptographic hash (the Token)
-  return ''
+  return jwt.sign({id, email, fullname, bio}, secret, {
+    expiresIn: '2h'
+  });
   // -------------------------------
 }
 
@@ -44,7 +50,7 @@ module.exports = function(app) {
     async signup(parent, args, context) {
       try {
         /**
-         * @TODO: Authentication - Server
+         * @done: Authentication - Server
          *
          * Storing passwords in your project's database requires some basic security
          * precautions. If someone gains access to your database, and passwords
@@ -54,9 +60,9 @@ module.exports = function(app) {
          * and store that instead. The password can be decoded using the original password.
          */
         // @TODO: Use bcrypt to generate a cryptographic hash to conceal the user's password before storing it.
-        const hashedPassword = ''
+        const hashedPassword = await bcrypt.hash(args.user.password, 10)
         // -------------------------------
-
+//connects to a query that adds a new user
         const user = await context.pgResource.createUser({
           fullname: args.user.fullname,
           email: args.user.email,
@@ -69,9 +75,9 @@ module.exports = function(app) {
           res: context.req.res
         })
 
-        return {
-          id: user.id
-        }
+        return true
+          
+        
       } catch (e) {
         throw new AuthenticationError(e)
       }
