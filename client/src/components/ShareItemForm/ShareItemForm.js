@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 
 import { FormSpy, Form, Field } from 'react-final-form'
 import { connect } from 'react-redux'
@@ -6,7 +6,8 @@ import ItemsContainer from '../../containers/ItemsContainer'
 import {
   MenuItem,
   Select,
-  Checkbox
+  Checkbox,
+  Button,
 } from '../../../node_modules/@material-ui/core'
 import Menu from '@material-ui/core/Menu'
 
@@ -19,6 +20,9 @@ import {
   resetNewItem
 } from './../../redux/modules/ShareItemPreview'
 
+
+
+
 const validate = values => {}
 const onSubmit = values => {
   console.log(values.itemName)
@@ -29,9 +33,16 @@ class ShareItemForm extends Component {
     super(props)
     this.state = {
       fileSelected: false,
+      imageurl:'',
       selectedTags: [],
       submitted: false
     }
+    this.fileRef = React.createRef();
+  }
+
+
+  handleImageSelect = event => {
+    this.setState({fileSelected: event.target.files[0]})
   }
 
   handleCheckbox(event) {
@@ -39,6 +50,34 @@ class ShareItemForm extends Component {
       selectedTags: event.target.value
     })
   }
+
+
+  async saveItem(values, tags, addItem){
+    const{
+      validity, 
+      files:[file]
+    } =this.fileInput.current
+   if(validity.valid || !file) return;
+   try{
+     const itemData = {
+       ...values, 
+       tags: this.applyTags(tags)
+     }
+     await addItem.mutation({
+       variables:{
+         item:itemData,
+         image: file
+       }
+     })
+     this.setState({done:true})
+   }catch(e){
+     console.log(e)
+   }
+   }
+
+
+
+
 
   generateTagsText(tags, selected) {
     return tags
@@ -67,10 +106,10 @@ class ShareItemForm extends Component {
 
   dispatchUpdate(values, tags, updateNewItem) {
     //convert an image in
-    if (!values.imageurl && this.state.fileSelected) {
-      this.getBase64Url().then(imageurl => {
+    if (!values.imageUrl && this.state.fileSelected) {
+      this.getBase64Url().then(imageUrl => {
         updateNewItem({
-          imageurl
+          imageUrl
         })
       })
     }
@@ -94,7 +133,7 @@ class ShareItemForm extends Component {
     const { resetImage, updateNewItem, resetNewItem } = this.props
     return (
       <ItemsContainer>
-        {({ tagData: { tags, loading, error } }) => {
+        {({ addItem, tagData: { tags, loading, error } }) => {
           if (loading) return '...loading'
           if (error) return '...error'
           return (
@@ -102,7 +141,10 @@ class ShareItemForm extends Component {
               <h1>Share. Borrow. Prosper.</h1>
               <SelectImageButton />
               <Form
-                onSubmit={onSubmit}
+                onSubmit={values=>{
+                  this.saveItem(values, tags, addItem)
+                }}
+
                 //  validate={}
                 render={({ handleSubmit, pristine, invalid, values }) => (
                   <form onSubmit={handleSubmit}>
@@ -115,6 +157,30 @@ class ShareItemForm extends Component {
                         return ''
                       }}
                     />
+
+                  <Field  name='imageurl'>
+                  {(input, meta)=>(
+                    <Fragment>
+                    <Button 
+                    onClick = {()=> {
+                      this.fileRef.current.click()
+                      //TODO if i clikc and there is an iage 
+                      //selected already clear the image from the state
+                      //and start over
+                    }}
+
+                    > Upload an Image</Button>
+                    <input  
+                    onChange = {(e) => this.handleImageSelect(e)}
+                    type = 'file'
+                    accept='image/*'
+                    hidden
+                    ref = {this.fileRef}
+                    />
+                    </Fragment>
+                   )}   
+                  </Field>
+
                     <Field
                       name="title"
                       render={({ input, meta }) => (

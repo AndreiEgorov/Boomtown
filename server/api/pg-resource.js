@@ -177,7 +177,7 @@ module.exports = function(postgres) {
         postgres.connect((err, client, done) => {
           try {
             // Begin postgres transaction
-            client.query('BEGIN', err => {
+            client.query('BEGIN', err => { // transaction code
               // Convert image (file stream) to Base64
               const imageStream = image.stream.pipe(strs('base64'))
 

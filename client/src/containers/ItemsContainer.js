@@ -62,6 +62,10 @@ const tagData = ({ render }) => {
 }
 
 const addItem = ({ render }) => {
+
+  return(<Mutation mutation={ADD_ITEM_MUTATION}>
+  {(mutation, {data,err,load})=> render({mutation, data, err, load})}
+  </Mutation>)
   /**
    * @TODO: Use Apollo's <Mutation /> component to use the signup mutation.
    *
@@ -75,7 +79,7 @@ const ItemsContainer = adopt({
   itemsData,
   //userItemsData,
   tagData,
-  // addItem
+  addItem
   // -------------------------------
 })
 
