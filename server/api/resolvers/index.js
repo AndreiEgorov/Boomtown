@@ -15,8 +15,8 @@
  */
 const { ApolloError } = require('apollo-server')
 
-// @TODO: Uncomment these lines later when we add auth
-// const jwt = require("jsonwebtoken")
+
+const jwt = require("jsonwebtoken")
 const authMutations = require("./auth")
 // -------------------------------
 const { UploadScalar, DateScalar } = require('../custom-types')
@@ -25,24 +25,16 @@ module.exports = function(app) {
   return {
     Upload: UploadScalar,
     // Date: DateScalar,
-
+   
     Query: {
-      viewer() {
-        /**
-         * @TODO: Authentication - Server
-         *
-         *  If you're here, you have successfully completed the sign-up and login resolvers
-         *  and have added the JWT from the HTTP cookie to your resolver's context.
-         *
-         *  The viewer is what we're calling the current user signed into your application.
-         *  When the user signed in with their username and password, an JWT was created with
-         *  the user's information cryptographically encoded inside.
-         *
-         *  To provide information about the user's session to the app, decode and return
-         *  the token's stored user here. If there is no token, the user has signed out,
-         *  in which case you'll return null
-         */
-        return null
+      viewer(parent, args, context, info) {
+        if(context.token){
+          return jwt.decode(context.token, app.get('JWT_REQUIRED'));
+  
+        }
+        return null;
+  
+   
       },
       async user(parent, { id }, { pgResource }, info) {
         try {
@@ -131,7 +123,7 @@ module.exports = function(app) {
         // -------------------------------
       },
       async tags(parent, args, { pgResource }, info) {
-        // @TODO: Replace this mock return statement with the correct tags for the queried Item from Postgres
+        // correct tags for the queried Item from Postgres
         try {
           const tags = await pgResource.getTagsForItem(parent.id)
           return tags
@@ -142,7 +134,7 @@ module.exports = function(app) {
       },
       async borrower(parent, args, { pgResource }, info) {
         /**
-         * @TODO: Replace this mock return statement with the correct user from Postgres
+         * correct user from Postgres
          * or null in the case where the item has not been borrowed.
          */
         try {
@@ -193,3 +185,4 @@ module.exports = function(app) {
     }
   }
 }
+

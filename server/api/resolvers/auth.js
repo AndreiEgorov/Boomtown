@@ -20,7 +20,7 @@ function setCookie({ tokenName, token, res }) {
   res.cookie(tokenName, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 1000*60*60*2 
+    maxAge: 1000 * 60 * 60 * 2
 
     // @TODO: Supply the correct configuration values for our cookie here
   })
@@ -39,9 +39,9 @@ function generateToken(user, secret) {
    *  which can be decoded using the app secret to retrieve the stateless session.
    */
   // Refactor this return statement to return the cryptographic hash (the Token)
-  return jwt.sign({id, email, fullname, bio}, secret, {
+  return jwt.sign({ id, email, fullname, bio }, secret, {
     expiresIn: '2h'
-  });
+  })
   // -------------------------------
 }
 
@@ -49,20 +49,10 @@ module.exports = function(app) {
   return {
     async signup(parent, args, context) {
       try {
-        /**
-         * @done: Authentication - Server
-         *
-         * Storing passwords in your project's database requires some basic security
-         * precautions. If someone gains access to your database, and passwords
-         * are stored in 'clear-text' your users accounts immediately compromised.
-         *
-         * The solution is to create a cryptographic hash of the password provided,
-         * and store that instead. The password can be decoded using the original password.
-         */
-        // @TODO: Use bcrypt to generate a cryptographic hash to conceal the user's password before storing it.
+        // generate a cryptographic hash to conceal the user's password before storing it.
         const hashedPassword = await bcrypt.hash(args.user.password, 10)
         // -------------------------------
-//connects to a query that adds a new user
+        //connects to a query that adds a new user
         const user = await context.pgResource.createUser({
           fullname: args.user.fullname,
           email: args.user.email,
@@ -76,8 +66,6 @@ module.exports = function(app) {
         })
 
         return true
-          
-        
       } catch (e) {
         throw new AuthenticationError(e)
       }
@@ -88,13 +76,6 @@ module.exports = function(app) {
         const user = await context.pgResource.getUserAndPasswordForVerification(
           args.user.email
         )
-
-        /**
-         *  @TODO: Authentication - Server
-         *
-         *  To verify the user has provided the correct password, we'll use the provided password
-         *  they submitted from the login form to decrypt the 'hashed' version stored in out database.
-         */
         // Use bcrypt to compare the provided password to 'hashed' password stored in your database.
         const valid = await bcrypt.compare(args.user.password, user.password)
         // -------------------------------
@@ -114,7 +95,7 @@ module.exports = function(app) {
       }
     },
 
-    logout(parent, args, context) {
+    logout({ parent, args, context }) {
       context.req.res.clearCookie(app.get('JWT_COOKIE_NAME'))
       return true
     }

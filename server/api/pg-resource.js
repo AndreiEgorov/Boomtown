@@ -199,7 +199,7 @@ module.exports = function(postgres) {
                   values: [
                     items.title,
                     items.description,
-                    items.description,
+                    items.imageurl,
                     items.ownerid
                   ]
                 }
@@ -207,7 +207,7 @@ module.exports = function(postgres) {
 
                 // Insert new Itemr
                 // @TODO
-                const newItem = client.query(newItemQuery)
+                await client.query(newItemQuery)
                 // -------------------------------
 
                 ///DO NOT TOUCH AREA-------------
@@ -215,6 +215,7 @@ module.exports = function(postgres) {
                   text:
                     'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
                   values: [
+                    items.itemid,
                     // itemid,  //newitem fro  //get the id from the newly inserted item as "itemid"
                     image.filename,
                     image.mimetype,

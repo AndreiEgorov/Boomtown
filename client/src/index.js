@@ -47,15 +47,6 @@ import Routes from './routes/index'
  * prop's value.
  */
 
-/**
- * @TODO: Add the Viewer Context
- *
- * import { ViewerProvider } from './context/ViewerProvider'
- *
- * Below in your <App />, wrap the <ViewerProvider /> component around
- * the <BrowserRouter /> component so the router is aware of whether a
- * user is currently logged in and who that user is.
- */
 
 
 
@@ -64,6 +55,8 @@ import Routes from './routes/index'
 // -------------------------------
 
 import './index.css'
+import { ViewerProvider } from './context/ViewerProvider'
+
 
 const App = () => {
   return (
@@ -71,9 +64,11 @@ const App = () => {
     <ApolloProvider client={client}>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
+        <ViewerProvider>
+          <BrowserRouter> 
+            <Routes />
+          </BrowserRouter>
+         </ViewerProvider> 
       </MuiThemeProvider>
     </ApolloProvider>
     </ReduxProvider>

@@ -66,6 +66,7 @@ module.exports = gql`
   }
 
   type Query {
+    uploads:[File] 
     user(id: ID!): User
     viewer: User
     items(filter: ID!): [Item]
@@ -87,6 +88,6 @@ module.exports = gql`
     addItem(item: NewItemInput!, image: Upload): Item
     signup(user: SignUpInput!): Boolean
     login(user: LoginInput): Boolean
-    logout:Boolean
+    logout:Boolean!
   }
 `
