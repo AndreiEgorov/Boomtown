@@ -21,7 +21,8 @@ module.exports = function(postgres) {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: 'INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *', //add a query to add a user
+        text:
+          'INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *', //add a query to add a user
         values: [fullname, email, password]
       }
       try {
@@ -148,7 +149,6 @@ module.exports = function(postgres) {
       return tags.rows
     },
 
-    //IGNOMRE THIS BOY SDFDSF
     async saveNewItem({ item, image, user }) {
       /**
        *  @TODO: Adding a New Item
@@ -159,8 +159,7 @@ module.exports = function(postgres) {
        *  All of the INSERT statements must:
        *  1) Proceed in a specific order.
        *  2) Succeed for the new Item to be considered added
-       *  3) If any of the INSERT queries fail, any successful INSERT
-       *     queries should be 'rolled back' to avoid 'orphan' data in the database.
+       *  3) tabase.
        *
        *  To achieve #3 we'll ue something called a Postgres Transaction!
        *  The code for the transaction has been provided for you, along with
@@ -177,11 +176,12 @@ module.exports = function(postgres) {
         postgres.connect((err, client, done) => {
           try {
             // Begin postgres transaction
-            client.query('BEGIN', err => { // transaction code
+            client.query('BEGIN', err => {
+              // transaction code
               // Convert image (file stream) to Base64
               const imageStream = image.stream.pipe(strs('base64'))
 
-              let base64Str = ''
+              let base64Str = 'data: image/*;base64,'
               imageStream.on('data', data => {
                 base64Str += data
               })
@@ -192,42 +192,54 @@ module.exports = function(postgres) {
 
                 // Generate new Item query
                 // @TODO
+
+                const newItemQuery = {
+                  text:
+                    'WITH newitem AS ( INSERT INTO items (title, description,imageurl,ownerid) VALUES( $1, $2, $3, $4)RETURNING id)',
+                  values: [
+                    items.title,
+                    items.description,
+                    items.description,
+                    items.ownerid
+                  ]
+                }
                 // -------------------------------
 
-                // Insert new Item
+                // Insert new Itemr
                 // @TODO
+                const newItem = client.query(newItemQuery)
                 // -------------------------------
 
+                ///DO NOT TOUCH AREA-------------
                 const imageUploadQuery = {
                   text:
                     'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
                   values: [
-                    // itemid,
+                    // itemid,  //newitem fro  //get the id from the newly inserted item as "itemid"
                     image.filename,
                     image.mimetype,
                     'base64',
                     base64Str
                   ]
                 }
-
                 // Upload image
-                const uploadedImage = await client.query(imageUploadQuery)
-                const imageid = uploadedImage.rows[0].id
+                await client.query(imageUploadQuery)
 
-                // Generate image relation query
-                // @TODO
-                // -------------------------------
-
-                // Insert image
-                // @TODO
-                // -------------------------------
+                //DO NOT TOUCH AREA END------------
 
                 // Generate tag relationships query (use the'tagsQueryString' helper function provided)
                 // @TODO
                 // -------------------------------
 
-                // Insert tags
-                // @TODO
+                //////Create tags query
+                const tagsQuery = {
+                  text:
+                    'INSERT INTO itemtags(tagid, itemid) VALUES $1(SELECT id FROM newitem)',
+                  values: [itemtags.tagid]
+                }
+
+                // Invoke insert tags query
+                await client.query(tagsQuery)
                 // -------------------------------
 
                 // Commit the entire transaction!

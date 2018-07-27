@@ -16,8 +16,8 @@ function ShareButton(props) {
   const { classes } = props;
   return (
     <div>
-      <Button variant="contained" className={classes.button}>
-        Share
+      <Button variant="contained" className={classes.button} >
+        Share 
       </Button>
      
      
@@ -30,3 +30,9 @@ ShareButton.propTypes = {
 };
 
 export default withStyles(styles)(ShareButton);
+
+
+
+
+
+

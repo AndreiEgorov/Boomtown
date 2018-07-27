@@ -188,7 +188,7 @@ module.exports = function(app) {
           image: args.image,
           user
         })
-        return newItem
+        return { id: 1}
       }
     }
   }

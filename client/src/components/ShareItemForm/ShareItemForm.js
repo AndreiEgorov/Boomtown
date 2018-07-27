@@ -38,8 +38,16 @@ class ShareItemForm extends Component {
       submitted: false
     }
     this.fileRef = React.createRef();
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+ 
+
+
+
+  handleSubmit(values){
+    console.log('Controlled in:' + values)
+  }
 
   handleImageSelect = event => {
     this.setState({fileSelected: event.target.files[0]})
@@ -56,8 +64,8 @@ class ShareItemForm extends Component {
     const{
       validity, 
       files:[file]
-    } =this.fileInput.current
-   if(validity.valid || !file) return;
+    } = this.fileRef.current
+   if(!validity.valid) return;
    try{
      const itemData = {
        ...values, 
@@ -74,6 +82,8 @@ class ShareItemForm extends Component {
      console.log(e)
    }
    }
+
+
 
 
 
@@ -131,6 +141,7 @@ class ShareItemForm extends Component {
 
   render() {
     const { resetImage, updateNewItem, resetNewItem } = this.props
+    const { fileSelected } = this.state
     return (
       <ItemsContainer>
         {({ addItem, tagData: { tags, loading, error } }) => {
@@ -163,13 +174,15 @@ class ShareItemForm extends Component {
                     <Fragment>
                     <Button 
                     onClick = {()=> {
-                      this.fileRef.current.click()
+                      fileSelected ? (this.setState({ fileSelected: false }), this.fileRef.current.value = '', this.props.resetImage()):this.fileRef.current.click()
+                
+
                       //TODO if i clikc and there is an iage 
                       //selected already clear the image from the state
                       //and start over
                     }}
 
-                    > Upload an Image</Button>
+                    > {fileSelected ? 'Reset Image' : 'Upload an Image'}   </Button>
                     <input  
                     onChange = {(e) => this.handleImageSelect(e)}
                     type = 'file'
@@ -228,6 +241,7 @@ class ShareItemForm extends Component {
                           </MenuItem>
                         ))}
                     </Select>
+                    <input type='submit' value='Share'/>
                   </form>
                 )}
               />
