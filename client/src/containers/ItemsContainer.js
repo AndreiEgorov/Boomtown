@@ -14,7 +14,7 @@ import {
 } from '../apollo/queries'
 
 
-const itemsData = ({ render }) => {
+const itemsData = ({ render }) => (
  
 <ViewerContext.Consumer>
 {({viewer})=>(
@@ -25,19 +25,19 @@ const itemsData = ({ render }) => {
 </ViewerContext.Consumer>
 
 
-}
+)
 
-const userItemsData = ({ userId, render }) => {
+const userItemsData = ({ userId, render }) => (
   <ViewerContext.Consumer>
   {({viewer})=> (
     <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: userId || viewer.id }}>
-      {({ data: { user }, loading }) => render({ user, loading })//user, bcs they user is a name of the query
+      {({ data: { user } = {}, loading }) => render({ user, loading }) //user, bcs they user is a name of the query
       }
     </Query>
   )}
    </ViewerContext.Consumer>
   
-}
+)
 const tagData = ({ render }) => {
   return (
     <Query query={ALL_TAGS_QUERY}>
@@ -49,7 +49,7 @@ const tagData = ({ render }) => {
  
 }
 
-const addItem = ({ render }) => {
+const addItem = ({ render }) => (
 
 <ViewerContext.Consumer>
 {({viewer})=> (
@@ -60,7 +60,7 @@ const addItem = ({ render }) => {
   </Mutation>
 )}
 </ViewerContext.Consumer>
-};
+);
  
 
 const ItemsContainer = adopt({

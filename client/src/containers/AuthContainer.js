@@ -11,17 +11,28 @@ import {
   SIGNUP_MUTATION
 } from '../apollo/queries'
 
-const signup = ({ render }) => (
- <Mutation
-  mutation={SIGNUP_MUTATION}
-  refetchQueries={result => [{query:VIEWER_QUERY}]}>
-  {(mutation,{data, error, loading})=>
-  render({mutation, data, error, loading})}
+const signup = ({ render }) => {
+  console.log('hi')
+  return(
+    <Mutation
+    mutation={SIGNUP_MUTATION}
+    refetchQueries={result => [{query:VIEWER_QUERY}]}>
+    {(mutation,{data, error, loading})=>
+    render({mutation, data, error, loading})}
 
- </Mutation>
-)
+   </Mutation>
 
-const login = ({ render }) => (
+   
+  )
+
+}
+
+
+
+const login = ({ render }) => {
+
+return(
+
   <Mutation
   mutation={LOGIN_MUTATION}
   refetchQueries={result => [{query:VIEWER_QUERY}]}>
@@ -30,8 +41,11 @@ const login = ({ render }) => (
   render({mutation, data, error, loading})
   }
   </Mutation>
- 
 )
+
+}
+ 
+
 
 const logout = ({ render }) => (
   <Mutation mutation = {LOGOUT_MUTATION} onCompleted={() => client.resetStore()}>

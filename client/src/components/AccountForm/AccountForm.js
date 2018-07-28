@@ -24,6 +24,36 @@ class AccountForm extends Component {
     }
   }
 
+  handleSubmit = values => {
+    return {...values}
+  }
+
+
+  handlePasswordToggle() {
+    var x = document.getElementById('password')
+    if (x.type === 'password') {
+      x.type = 'text'
+      // this.setState({toggleIcon:'far fa-eye-slash'})
+    } else {
+      x.type = 'password'
+      // this.setState({toggleIcon:'far fa-eye'})
+    }
+  }
+
+  validate(values) {
+    const errors = {}
+    if (!values.email) {
+      errors.email = 'Required'
+    }
+    if (!values.password) {
+      errors.password = 'Required'
+    }
+
+    return (
+      errors,
+      console.log(errors)
+    )
+  }
   render() {
     const { classes } = this.props
 
@@ -32,9 +62,24 @@ class AccountForm extends Component {
         {({ signup, login }) => {
           return (
             <Form
-              onSubmit={() => {
-                console.log('You are typing now')
-              }}
+              onSubmit={
+            this.state.formToggle
+                ? values => {
+                    login.mutation({
+                      variables: {
+                        user:values
+                      }
+                    })
+                  }
+                : values => {
+                    signup.mutation({
+                      variables: {
+                        user:values 
+                      }
+                    })
+                  }
+          }
+          validate={this.validate}
               render={({
                 handleSubmit,
                 pristine,
@@ -44,9 +89,7 @@ class AccountForm extends Component {
               }) => {
                 return (
                   <form
-                    onSubmit={() => {
-                      console.log('Submitted')
-                    }}
+                    onSubmit={handleSubmit}
                     className={classes.accountForm}
                   >
                     {!this.state.formToggle && (
@@ -69,7 +112,8 @@ class AccountForm extends Component {
                         inputProps={{
                           autoComplete: 'off'
                         }}
-                        value={''}
+                        {...input}
+                       
                       />
                       )}
                       </Field>
@@ -84,11 +128,11 @@ class AccountForm extends Component {
                         inputProps={{
                           autoComplete: 'off'
                         }}
-                        value={''}
+                        {...input}
                       />)}
                      
                 </Field>
-                
+
                     </FormControl>
                     <FormControl className={classes.formControl}>
                       <Grid
@@ -104,7 +148,8 @@ class AccountForm extends Component {
                           size="large"
                           color="secondary"
                           disabled={
-                            false // @TODO: This prop should depend on pristine or valid state of form
+                            pristine || invalid
+                            //  This prop should depend on pristine or valid state of form
                           }
                         >
                           {this.state.formToggle ? 'Enter' : 'Create Account'}

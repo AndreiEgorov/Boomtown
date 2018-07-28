@@ -27,7 +27,8 @@ const Items = ({ classes }) => {
             if (loading) return '...loading'
             if (error) return '...error'
             const items = data.items
-            return items.map((item, index) => (
+            return (<div>
+            {items.map((item, index) => (
               <Grid
                 key={index}
                 item
@@ -39,7 +40,8 @@ const Items = ({ classes }) => {
               >
                 <ItemCard item={item} />
               </Grid>
-            ))
+            ))}
+            </div>)
           }}
         </ItemsContainer>
       </Grid>

@@ -150,7 +150,7 @@ export const LOGOUT_MUTATION = gql`
 //     signup(user: $user) //nothing else is needed here
 //   }
 export const SIGNUP_MUTATION = gql`
-  mutation signup($user: SignupInput!) {
+  mutation signup($user: SignUpInput!) {
     signup(user: $user)
   }
 `
