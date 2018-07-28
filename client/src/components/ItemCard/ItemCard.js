@@ -15,6 +15,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import BorrowButton from './BorrowButton'
+import Gravatar from 'react-gravatar'
+import moment from 'moment'
 
 const styles = theme => ({
   
@@ -47,13 +49,17 @@ const ItemCard = ({ classes, item }) => {
         />
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
-            </Avatar>
+            <Gravatar className={classes.avatar} email={item.itemowner.email} />
+            
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={item.itemowner.fullname}
+          subheader={moment(new Date(item.created)).fromNow()}
+          className={classes.header}
         />
+
+
+
+
 
         <CardContent>
           <Typography variant="title">{item.title}</Typography>

@@ -1,12 +1,7 @@
 const { Pool } = require('pg')
 
 module.exports = function (app) {
-  /**
-   * @TODO: Configuration Variables
-   *
-   *  Retrieve the necessary information to connect to Postgres
-   *  For example: app.get('PG_DB')
-   */
+//Adding Configuration variables and Retrieving the necessary information to connect to Postgres
   return new Pool({
     host: app.get("PG_HOST"),
     user: app.get("PG_USER"),
