@@ -38,7 +38,7 @@ const ItemCard = ({ classes, item }) => {
   console.log(item)
 
   return (
-    <div>
+    <div >
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}

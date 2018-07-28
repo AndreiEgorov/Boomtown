@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid'
 
 const Items = ({ classes }) => {
   return (
-    <div>
+    <div >
       <HeaderBar />
 
       <Grid
@@ -27,7 +27,8 @@ const Items = ({ classes }) => {
             if (loading) return '...loading'
             if (error) return '...error'
             const items = data.items
-            return (<div>
+            return (
+              <div className={classes.boxOfCards}>
             {items.map((item, index) => (
               <Grid
                 key={index}
