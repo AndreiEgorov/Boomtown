@@ -69,7 +69,7 @@ module.exports = gql`
     uploads:[File] 
     user(id: ID!): User
     viewer: User
-    items(filter: ID!): [Item]
+    items(filter: ID): [Item]
     tags: [Tag]
   }
 

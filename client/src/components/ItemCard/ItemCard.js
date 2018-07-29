@@ -44,7 +44,7 @@ const ItemCard = ({ classes, item }) => {
       <Card className={classes.card}>
         <CardMedia
           className={classes.media} 
-          image={item.imageUrl}
+          image={item.imageurl}
           
         />
         <CardHeader

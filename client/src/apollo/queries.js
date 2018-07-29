@@ -57,8 +57,8 @@ const ItemFields = gql`
 //query #2 ALL_ITEMS_QUERY - works
 //Displays all items that are not users and are not borrowed
 export const ALL_ITEMS_QUERY = gql`
-    query items($filter: ID!) {
-      items(filter:$filter){
+    query GetAllItems($filter: ID) {
+      items(filter: $filter){
         ...ItemFields
       }
 
