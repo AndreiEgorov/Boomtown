@@ -117,7 +117,7 @@ export const ALL_TAGS_QUERY = gql`
 
 export const ADD_ITEM_MUTATION = gql`
 
-  mutation addNewItem($item: NewItemInput!, $image: Upload!) {
+  mutation addItem($item: NewItemInput!, $image: Upload!) {
     addItem(item:$item, image:$image){
       id
     }   

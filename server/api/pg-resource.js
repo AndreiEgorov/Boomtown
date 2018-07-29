@@ -174,17 +174,25 @@ module.exports = function(postgres) {
          * to a client from the client pool.
          */
         postgres.connect((err, client, done) => {
+
           try {
             // Begin postgres transaction
             client.query('BEGIN', err => {
-              // transaction code
-              // Convert image (file stream) to Base64
+              // Convert image (file stream) to Base64      
               const imageStream = image.stream.pipe(strs('base64'))
 
-              let base64Str = 'data: image/*;base64,'
+              let base64Str = 'data:image/*;base64, '
               imageStream.on('data', data => {
                 base64Str += data
               })
+
+
+            
+
+
+
+
+
 
               imageStream.on('end', async () => {
                 // Image has been converted, begin saving things
@@ -194,29 +202,30 @@ module.exports = function(postgres) {
                 // @TODO
 
                 const newItemQuery = {
-                  text:
-                    'WITH newitem AS ( INSERT INTO items (title, description,imageurl,ownerid) VALUES( $1, $2, $3, $4)RETURNING id)',
+                  text: `WITH newitem AS ( INSERT INTO items (title, description,ownerid) VALUES( $1, $2, $3, )RETURNING *)`,
                   values: [
-                    items.title,
-                    items.description,
-                    items.imageurl,
-                    items.ownerid
+                   title,
+                   description,
+                    // items.imageurl,
+                  user.id
                   ]
                 }
                 // -------------------------------
 
                 // Insert new Itemr
                 // @TODO
-                await client.query(newItemQuery)
+                const newItem = await client.query(newItemQuery)
+                const itemid = newItem.rows[0].id
+              //  const itemid = newItem.rows[0].id
+               
+
                 // -------------------------------
 
                 ///DO NOT TOUCH AREA-------------
                 const imageUploadQuery = {
-                  text:
-                    'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                  text: 'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
                   values: [
-                    items.itemid,
-                    // itemid,  //newitem fro  //get the id from the newly inserted item as "itemid"
+                    itemid,
                     image.filename,
                     image.mimetype,
                     'base64',
@@ -224,7 +233,8 @@ module.exports = function(postgres) {
                   ]
                 }
                 // Upload image
-                await client.query(imageUploadQuery)
+                const uploadedImage = await client.query(imageUploadQuery)
+                const imageid = uploadedImage.rows[0].id
 
                 //DO NOT TOUCH AREA END------------
 
@@ -233,10 +243,19 @@ module.exports = function(postgres) {
                 // -------------------------------
 
                 //////Create tags query
+                // const tagsQuery = {
+                //   text:
+                //     'INSERT INTO itemtags(tagid, itemid) VALUES $1(SELECT id FROM newitem)',
+                //   values: [itemtags.tagid]
+                // }
+
                 const tagsQuery = {
-                  text:
-                    'INSERT INTO itemtags(tagid, itemid) VALUES $1(SELECT id FROM newitem)',
-                  values: [itemtags.tagid]
+                  text: `INSERT INTO itemtags (tagid, itemid) VALUES ${tagsQueryString(
+                    [...tags],
+                    itemId,
+                    ''
+                  )}`,
+                  values: tags.map(tag => tag.id)
                 }
 
                 // Invoke insert tags query
@@ -251,7 +270,7 @@ module.exports = function(postgres) {
                   // release the client back to the pool
                   done()
                   // Uncomment this resolve statement when you're ready!
-                  // resolve(newItem.rows[0])
+                  resolve(newItem.rows[0])
                   // -------------------------------
                 })
               })

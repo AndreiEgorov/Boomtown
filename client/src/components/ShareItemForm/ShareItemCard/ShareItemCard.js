@@ -17,6 +17,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import BorrowButton from './../../ItemCard/BorrowButton'
 import ItemCard from './../../ItemCard/'
 
+// import { ViewerContext } from '../../../context/ViewerProvider'
+
 
 import {connect} from 'react-redux';
 
@@ -45,11 +47,17 @@ const styles = theme => ({
 //   description: 'Describe your item'
 // }
 
-const ShareItemCard =(props ) => {
+const ShareItemCard =(props) => {
   return(
-    <ItemCard item={props.shareItemPreview}/>
+    <ItemCard item={props.shareItemPreview} />
   )
 }
+
+
+
+
+
+
 
 
 // const ShareItemCard = ({ classes, item }) => {
@@ -89,6 +97,7 @@ ShareItemCard.propTypes = {
 const mapStateToProps = state => {
   return {
     shareItemPreview: state.shareItemPreview,
+
   }
 }
 

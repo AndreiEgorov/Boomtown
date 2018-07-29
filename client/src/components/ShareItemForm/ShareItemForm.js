@@ -8,8 +8,11 @@ import {
   Select,
   Checkbox,
   Button,
+  
+
 } from '../../../node_modules/@material-ui/core'
 import Menu from '@material-ui/core/Menu'
+import Lable from '@material-ui/core/FormLabel'
 
 import ShareItemCard from './ShareItemCard'
 import ShareButton from './ShareButton/ShareButton'
@@ -19,6 +22,23 @@ import {
   updateNewItem,
   resetNewItem
 } from './../../redux/modules/ShareItemPreview'
+import { withStyles } from '@material-ui/core/styles';
+// import styles from './styles'
+
+
+
+
+
+const styles = theme => ({
+
+
+  test:{
+    background:"green"
+  }
+})
+
+
+
 
 
 
@@ -33,24 +53,20 @@ class ShareItemForm extends Component {
     super(props)
     this.state = {
       fileSelected: false,
-      imageurl:'',
+      imageurl: '',
       selectedTags: [],
       submitted: false
     }
-    this.fileRef = React.createRef();
+    this.fileRef = React.createRef()
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
- 
-
-
-
-  handleSubmit(values){
+  handleSubmit(values) {
     console.log('Controlled in:' + values)
   }
 
   handleImageSelect = event => {
-    this.setState({fileSelected: event.target.files[0]})
+    this.setState({ fileSelected: event.target.files[0] })
   }
 
   handleCheckbox(event) {
@@ -59,35 +75,28 @@ class ShareItemForm extends Component {
     })
   }
 
-
-  async saveItem(values, tags, addItem){
-    const{
-      validity, 
-      files:[file]
+  async saveItem(values, tags, addItem) {
+    const {
+      validity,
+      files: [file]
     } = this.fileRef.current
-   if(!validity.valid) return;
-   try{
-     const itemData = {
-       ...values, 
-       tags: this.applyTags(tags)
-     }
-     await addItem.mutation({
-       variables:{
-         item:itemData,
-         image: file
-       }
-     })
-     this.setState({done:true})
-   }catch(e){
-     console.log(e)
-   }
-   }
-
-
-
-
-
-
+    if (!validity.valid) return
+    try {
+      const itemData = {
+        ...values,
+        tags: this.applyTags(tags)
+      }
+      await addItem.mutation({
+        variables: {
+          item: itemData,
+          image: file
+        }
+      })
+      this.setState({ done: true })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   generateTagsText(tags, selected) {
     return tags
@@ -142,20 +151,23 @@ class ShareItemForm extends Component {
   render() {
     const { resetImage, updateNewItem, resetNewItem } = this.props
     const { fileSelected } = this.state
+    const  {classes} = this.props
+   
     return (
-      <ItemsContainer>
+      <ItemsContainer className={classes.test}>
         {({ addItem, tagData: { tags, loading, error } }) => {
           if (loading) return '...loading'
           if (error) return '...error'
+          console.log('Andrei add item', addItem)
           return (
             <div>
               <h1>Share. Borrow. Prosper.</h1>
               <SelectImageButton />
               <Form
-                onSubmit={values=>{
+                onSubmit={values => {
                   this.saveItem(values, tags, addItem)
+                  console.log('Andrei', values, addItem)
                 }}
-
                 //  validate={}
                 render={({ handleSubmit, pristine, invalid, values }) => (
                   <form onSubmit={handleSubmit}>
@@ -169,30 +181,37 @@ class ShareItemForm extends Component {
                       }}
                     />
 
-                  <Field  name='imageurl'>
-                  {(input, meta)=>(
-                    <Fragment>
-                    <Button 
-                    onClick = {()=> {
-                      fileSelected ? (this.setState({ fileSelected: false }), this.fileRef.current.value = '', this.props.resetImage()):this.fileRef.current.click()
-                
+                    <Field name="imageurl">
+                      {(input, meta) => (
+                        <Fragment>
+                          <Button
+                            onClick={() => {
+                              fileSelected
+                                ? (this.setState({ fileSelected: false }),
+                                  (this.fileRef.current.value = ''),
+                                  this.props.resetImage())
+                                : this.fileRef.current.click()
 
-                      //TODO if i clikc and there is an iage 
-                      //selected already clear the image from the state
-                      //and start over
-                    }}
-
-                    > {fileSelected ? 'Reset Image' : 'Upload an Image'}   </Button>
-                    <input  
-                    onChange = {(e) => this.handleImageSelect(e)}
-                    type = 'file'
-                    accept='image/*'
-                    hidden
-                    ref = {this.fileRef}
-                    />
-                    </Fragment>
-                   )}   
-                  </Field>
+                              //TODO if i clikc and there is an iage
+                              //selected already clear the image from the state
+                              //and start over
+                            }}
+                          >
+                            {' '}
+                            {fileSelected
+                              ? 'Reset Image'
+                              : 'Upload an Image'}{' '}
+                          </Button>
+                          <input
+                            onChange={e => this.handleImageSelect(e)}
+                            type="file"
+                            accept="image/*"
+                            hidden
+                            ref={this.fileRef}
+                          />
+                        </Fragment>
+                      )}
+                    </Field>
 
                     <Field
                       name="title"
@@ -218,7 +237,7 @@ class ShareItemForm extends Component {
                         </div>
                       )}
                     />
-                    <lable>Add some tags</lable>
+                    <Lable>Add some tags</Lable>
 
                     <Select
                       multiple
@@ -241,7 +260,7 @@ class ShareItemForm extends Component {
                           </MenuItem>
                         ))}
                     </Select>
-                    <input type='submit' value='Share'/>
+                    <input type="submit" value="Share" />
                   </form>
                 )}
               />
@@ -269,5 +288,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   undefined,
-  mapDispatchToProps
-)(ShareItemForm)
+  mapDispatchToProps 
+)(withStyles(styles)(ShareItemForm))

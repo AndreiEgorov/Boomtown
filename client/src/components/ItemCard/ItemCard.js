@@ -43,13 +43,18 @@ const ItemCard = ({ classes, item }) => {
     <div >
       <Card className={classes.card}>
         <CardMedia
-          className={classes.media}
+          className={classes.media} 
           image={item.imageUrl}
           
         />
         <CardHeader
           avatar={
-            <Gravatar className={classes.avatar} email={item.itemowner.email} />
+            <Gravatar className={classes.avatar} email={item.itemowner.email} 
+            title={item.itemowner.fullname}
+          subheader={moment(new Date(item.created)).fromNow()}
+          className={classes.header}
+          default="monsterid" 
+            />
             
           }
           title={item.itemowner.fullname}
