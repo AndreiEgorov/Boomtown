@@ -121,7 +121,12 @@ module.exports = function(postgres) {
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
          */
-        text: `select * from items where ownerid = $1;`,
+        text: `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
+        FROM items item
+        INNER JOIN uploads up
+        ON up.itemid = item.id
+        WHERE ownerid = $1`,
+
 
         values: [id]
       })

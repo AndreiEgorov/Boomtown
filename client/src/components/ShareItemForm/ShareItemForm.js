@@ -125,10 +125,10 @@ class ShareItemForm extends Component {
 
   dispatchUpdate(values, tags, updateNewItem) {
     //convert an image in
-    if (!values.imageUrl && this.state.fileSelected) {
-      this.getBase64Url().then(imageUrl => {
+    if (!values.imageurl && this.state.fileSelected) {
+      this.getBase64Url().then(imageurl => {
         updateNewItem({
-          imageUrl
+          imageurl
         })
       })
     }
@@ -278,10 +278,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateNewItem(item))
   },
   resetImage() {
-    dispatch(resetImage)
+    dispatch(resetImage())
   },
   resetNewItem() {
-    dispatch(resetNewItem)
+    dispatch(resetNewItem())
   }
   // ... other methods
 })

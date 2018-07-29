@@ -30,8 +30,8 @@ const itemsData = ({ render }) => (
 const userItemsData = ({ userId, render }) => (
   <ViewerContext.Consumer>
   {({viewer})=> (
-    <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: userId || viewer.id }}>
-      {({ data: { user } = {}, loading }) => render({ user, loading }) //user, bcs they user is a name of the query
+    <Query query={ALL_USER_ITEMS_QUERY} variables={{ id:userId || viewer.id  }}>
+      {({ data, loading, error }) => render({ data, loading, error }) //user, bcs they user is a name of the query
       }
     </Query>
   )}
