@@ -1,34 +1,35 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
-import AddCircle from '@material-ui/icons/AddCircle';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+// import AddIcon from '@material-ui/icons/Add';
+// import Icon from '@material-ui/core/Icon';
+import AddCircle from '@material-ui/icons/AddCircle'
 import { Link } from 'react-router-dom'
-import styles from './styles';
-
+import styles from './styles'
 
 function ShareButton(props) {
-    console.log(classes)
-  const { classes } = props;
- 
+  console.log(classes)
+  const { classes } = props
+
   return (
-    <div >
-     
-   
-   
-      <Button variant="extendedFab" aria-label="Delete" className={classes.button} component={Link} to="/share">
-       <AddCircle className={classes.circle}/>
-          Share Something
+    <div>
+      <Button
+        variant="extendedFab"
+        aria-label="Delete"
+        className={classes.button}
+        component={Link}
+        to="/share"
+      >
+        <AddCircle className={classes.circle} />
+        Share Something
       </Button>
-      
     </div>
-  );
+  )
 }
 
 ShareButton.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+  classes: PropTypes.object.isRequired
+}
 
-export default withStyles(styles)(ShareButton);
+export default withStyles(styles)(ShareButton)
