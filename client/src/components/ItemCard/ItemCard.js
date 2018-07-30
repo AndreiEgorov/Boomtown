@@ -24,7 +24,8 @@ const styles = theme => ({
   
   card: {
     textAlign: 'left',
-    width: "400px",
+    maxWidth: "400px",
+    
   },
   media: {
     
@@ -45,7 +46,6 @@ const ItemCard = ({ classes, item }) => {
 
 
 
-  //uncomment it later!!!
 
 // item.itemowner = {
 //   email:'bob@email.com'

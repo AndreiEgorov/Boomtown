@@ -34,8 +34,8 @@ const Items = ({ classes }) => {
                 key={index}
                 item
                 xs={12}
-                sm={12}
-                md={6}
+                sm={6}
+                md={4}
                 lg={4}
                 className={classes.cardCell}
               >
