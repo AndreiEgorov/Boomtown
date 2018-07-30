@@ -6,9 +6,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
-/**
- * @TODO: Uncomment the following lines when authentication is added to the form
- */
+
 import { Form, Field } from 'react-final-form'
 
 import AuthContainer from '../../containers/AuthContainer'
@@ -25,18 +23,15 @@ class AccountForm extends Component {
   }
 
   handleSubmit = values => {
-    return {...values}
+    return { ...values }
   }
-
 
   handlePasswordToggle() {
     var x = document.getElementById('password')
     if (x.type === 'password') {
       x.type = 'text'
-      // this.setState({toggleIcon:'far fa-eye-slash'})
     } else {
       x.type = 'password'
-      // this.setState({toggleIcon:'far fa-eye'})
     }
   }
 
@@ -49,10 +44,7 @@ class AccountForm extends Component {
       errors.password = 'Required'
     }
 
-    return (
-      errors,
-      console.log(errors)
-    )
+    return errors, console.log(errors)
   }
   render() {
     const { classes } = this.props
@@ -63,23 +55,23 @@ class AccountForm extends Component {
           return (
             <Form
               onSubmit={
-            this.state.formToggle
-                ? values => {
-                    login.mutation({
-                      variables: {
-                        user:values
-                      }
-                    })
-                  }
-                : values => {
-                    signup.mutation({
-                      variables: {
-                        user:values 
-                      }
-                    })
-                  }
-          }
-          validate={this.validate}
+                this.state.formToggle
+                  ? values => {
+                      login.mutation({
+                        variables: {
+                          user: values
+                        }
+                      })
+                    }
+                  : values => {
+                      signup.mutation({
+                        variables: {
+                          user: values
+                        }
+                      })
+                    }
+              }
+              validate={this.validate}
               render={({
                 handleSubmit,
                 pristine,
@@ -88,10 +80,7 @@ class AccountForm extends Component {
                 form
               }) => {
                 return (
-                  <form
-                    onSubmit={handleSubmit}
-                    className={classes.accountForm}
-                  >
+                  <form onSubmit={handleSubmit} className={classes.accountForm}>
                     {!this.state.formToggle && (
                       <FormControl fullWidth className={classes.formControl}>
                         <InputLabel htmlFor="fullname">Username</InputLabel>
@@ -105,34 +94,33 @@ class AccountForm extends Component {
                     <FormControl fullWidth className={classes.formControl}>
                       <InputLabel htmlFor="email">Email</InputLabel>
                       <Field name="email">
-                      {({input, meta})=> (
-                        <Input
-                        id="email"
-                        type="text"
-                        inputProps={{
-                          autoComplete: 'off'
-                        }}
-                        {...input}
-                       
-                      />
-                      )}
+                        {({ input, meta }) => (
+                          <Input
+                            id="email"
+                            type="text"
+                            inputProps={{
+                              autoComplete: 'off'
+                            }}
+                            {...input}
+                          />
+                        )}
                       </Field>
                     </FormControl>
 
                     <FormControl fullWidth className={classes.formControl}>
                       <InputLabel htmlFor="password">Password</InputLabel>
-                 <Field name="password"> 
-                 {({input, meta})=> ( <Input
-                        id="password"
-                        type="password"
-                        inputProps={{
-                          autoComplete: 'off'
-                        }}
-                        {...input}
-                      />)}
-                     
-                </Field>
-
+                      <Field name="password">
+                        {({ input, meta }) => (
+                          <Input
+                            id="password"
+                            type="password"
+                            inputProps={{
+                              autoComplete: 'off'
+                            }}
+                            {...input}
+                          />
+                        )}
+                      </Field>
                     </FormControl>
                     <FormControl className={classes.formControl}>
                       <Grid
@@ -147,10 +135,7 @@ class AccountForm extends Component {
                           variant="contained"
                           size="large"
                           color="secondary"
-                          disabled={
-                            pristine || invalid
-                            //  This prop should depend on pristine or valid state of form
-                          }
+                          disabled={pristine || invalid}
                         >
                           {this.state.formToggle ? 'Enter' : 'Create Account'}
                         </Button>

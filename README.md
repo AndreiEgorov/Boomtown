@@ -13,14 +13,31 @@
 
 # Technologies used
 
-    * Server:
+     - Server:
         Node.js
         Appollo Server
         GraphQL - to process queries to the database
         PostgresQL - as the database
+        Postico app(for UI of database)
         * Dev dependencies: nodemon and jest-cli
 
+    -Client:
+        React.js
+        Redux.js
+        Material UI
+        Apollo     
+
+
 ## Server
+
+PostgresQL (Postico for GUI)
+Node.Js
+Express
+Apollo
+GraphQL
+
+
+
 
 Commands must be run from the `server` directory:
 
