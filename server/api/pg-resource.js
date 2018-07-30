@@ -1,11 +1,6 @@
 var strs = require('stringstream')
 
 function tagsQueryString(tags, itemid, result) {
-  /**
-   * Challenge:
-   * This function is recursive, and a little complicated.
-   * Can you refactor it to be simpler / more readable?
-   */
   const length = tags.length
   return length === 0
     ? `${result};`
@@ -53,80 +48,43 @@ module.exports = function(postgres) {
       }
     },
     async getUserById(id) {
-      /**
-       *  @TODO: Handling Server Errors
-       *
-       *  Inside of our resuorce methods we get to determine wen and how errors are returned
-       *  to our resolvers using try / catch / throw semantics.
-       *
-       *  Ideally, the errors that we'll throw from our resource should be able to be used by the client
-       *  to display user feedback. This means we'll be catching errors and throwing new ones.
-       *
-       *  Errors thrown from our resource will be captured and returned from our resolvers.
-       *
-       *  This will be the basic logic for this resource method:
-       *  1) Query for the user using the given id. If no user is found throw an error.
-       *  2) If there is an error with the query (500) throw an error.
-       *  3) If the user is found and there are no errors, return only the id, email, fullname, bio fields.
-       *     -- this is important,don't return the password!
-       *
-       *  You'll need to complete the query first before attempting this exercise.
-       */
-
       const findUserQuery = {
         text: `select * from users where id = $1`,
         values: [id]
       }
 
-      /**
-       *  Refactor the following code using the error handling logic described above.
-       *  When you're done here, ensure all of the resource methods in this file
-       *  include a try catch, and throw appropriate errors.
-       *
-       *  Here is an example throw statement: throw 'User was not found.'
-       *  Customize your throw statements so the message can be used by the client.
-       */
-
       const user = await postgres.query(findUserQuery)
       return user.rows[0]
-      // -------------------------------
     },
 
-    
     async getItems(idToOmit) {
-
       let text = `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
       FROM items item
       INNER JOIN uploads up
       ON up.itemid = item.id`
-      if(idToOmit){
-         text = `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
+      if (idToOmit) {
+        text = `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
           FROM items item
           INNER JOIN uploads up
           ON up.itemid = item.id
           WHERE item.ownerid <> $1 AND item.borrowerid IS NULL 
           ORDER BY item.created DESC`
       }
-    
+
       const items = await postgres.query({
-    text:text,
-      values: idToOmit ? [idToOmit] : []
+        text: text,
+        values: idToOmit ? [idToOmit] : []
       })
-      
+
       return items.rows
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
         text: `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
         FROM items item
         INNER JOIN uploads up
         ON up.itemid = item.id
         WHERE ownerid = $1`,
-
 
         values: [id]
       })
@@ -134,10 +92,6 @@ module.exports = function(postgres) {
     },
     async getBorrowedItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
         text: `select * from items where borrowerid = $1`,
         values: [id]
       })
@@ -159,35 +113,12 @@ module.exports = function(postgres) {
     },
 
     async saveNewItem({ item, image, user }) {
-      /**
-       *  @TODO: Adding a New Item
-       *
-       *  Adding a new Item to Posgtres is the most advanced query.
-       *  It requires 3 separate INSERT statements.
-       *
-       *  All of the INSERT statements must:
-       *  1) Proceed in a specific order.
-       *  2) Succeed for the new Item to be considered added
-       *  3) tabase.
-       *
-       *  To achieve #3 we'll ue something called a Postgres Transaction!
-       *  The code for the transaction has been provided for you, along with
-       *  helpful comments to help you get started.
-       *
-       *  Read the method and the comments carefully before you begin.
-       */
-
       return new Promise((resolve, reject) => {
-        /**
-         * Begin transaction by opening a long-lived connection
-         * to a client from the client pool.
-         */
         postgres.connect((err, client, done) => {
-
           try {
             // Begin postgres transaction
             client.query('BEGIN', err => {
-              // Convert image (file stream) to Base64      
+              // Convert image (file stream) to Base64
               const imageStream = image.stream.pipe(strs('base64'))
 
               let base64Str = 'data:image/*;base64, '
@@ -195,43 +126,21 @@ module.exports = function(postgres) {
                 base64Str += data
               })
 
-
-            
-
-
-
-
-
-
               imageStream.on('end', async () => {
                 // Image has been converted, begin saving things
                 const { title, description, tags } = item
 
-                // Generate new Item query
-                // @TODO
-
                 const newItemQuery = {
                   text: `INSERT INTO items (title, description,ownerid) VALUES( $1, $2, $3 )RETURNING *`,
-                  values: [
-                   title,
-                   description,
-                  user.id
-                  ]
+                  values: [title, description, user.id]
                 }
-                // -------------------------------
 
-                // Insert new Itemr
-                // @TODO
                 const newItem = await client.query(newItemQuery)
                 const itemid = newItem.rows[0].id
-              //  const itemid = newItem.rows[0].id
-               
 
-                // -------------------------------
-
-                ///DO NOT TOUCH AREA-------------
                 const imageUploadQuery = {
-                  text: 'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                  text:
+                    'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
                   values: [
                     itemid,
                     image.filename,
@@ -244,19 +153,6 @@ module.exports = function(postgres) {
                 const uploadedImage = await client.query(imageUploadQuery)
                 const imageid = uploadedImage.rows[0].id
 
-                //DO NOT TOUCH AREA END------------
-
-                // Generate tag relationships query (use the'tagsQueryString' helper function provided)
-                // @TODO
-                // -------------------------------
-
-                //////Create tags query
-                // const tagsQuery = {
-                //   text:
-                //     'INSERT INTO itemtags(tagid, itemid) VALUES $1(SELECT id FROM newitem)',
-                //   values: [itemtags.tagid]
-                // }
-
                 const tagsQuery = {
                   text: `INSERT INTO itemtags (tagid, itemid) VALUES ${tagsQueryString(
                     [...tags],
@@ -266,9 +162,7 @@ module.exports = function(postgres) {
                   values: tags.map(tag => tag.id)
                 }
 
-                // Invoke insert tags query
                 await client.query(tagsQuery)
-                // -------------------------------
 
                 // Commit the entire transaction!
                 client.query('COMMIT', err => {
