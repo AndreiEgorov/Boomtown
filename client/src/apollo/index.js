@@ -25,8 +25,8 @@ const client = new ApolloClient({
       }
       if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
-   
-    httpWithUploadsLink 
+
+    httpWithUploadsLink
   ]),
   cache: new InMemoryCache() // Pull data from client-side cache, if available
 })

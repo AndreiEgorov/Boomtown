@@ -1,9 +1,7 @@
 import { adopt } from 'react-adopt'
 import { Mutation } from 'react-apollo'
 import React from 'react'
-
 import client from '../apollo'
-
 import {
   VIEWER_QUERY,
   LOGIN_MUTATION,
@@ -13,53 +11,43 @@ import {
 
 const signup = ({ render }) => {
   console.log('hi')
-  return(
+  return (
     <Mutation
-    mutation={SIGNUP_MUTATION}
-    refetchQueries={result => [{query:VIEWER_QUERY}]}>
-    {(mutation,{data, error, loading})=>
-    render({mutation, data, error, loading})}
-
-   </Mutation>
-
-   
+      mutation={SIGNUP_MUTATION}
+      refetchQueries={result => [{ query: VIEWER_QUERY }]}
+    >
+      {(mutation, { data, error, loading }) =>
+        render({ mutation, data, error, loading })
+      }
+    </Mutation>
   )
-
 }
-
-
 
 const login = ({ render }) => {
-
-return(
-
-  <Mutation
-  mutation={LOGIN_MUTATION}
-  refetchQueries={result => [{query:VIEWER_QUERY}]}>
-  
-  {(mutation,{data, error, loading})=>
-  render({mutation, data, error, loading})
-  }
-  </Mutation>
-)
-
+  return (
+    <Mutation
+      mutation={LOGIN_MUTATION}
+      refetchQueries={result => [{ query: VIEWER_QUERY }]}
+    >
+      {(mutation, { data, error, loading }) =>
+        render({ mutation, data, error, loading })
+      }
+    </Mutation>
+  )
 }
- 
-
 
 const logout = ({ render }) => (
-  <Mutation mutation = {LOGOUT_MUTATION} onCompleted={() => client.resetStore()}>
-  {(mutation, {data,error, loading})=>
-  render({mutation, data, error, loading})}
+  <Mutation mutation={LOGOUT_MUTATION} onCompleted={() => client.resetStore()}>
+    {(mutation, { data, error, loading }) =>
+      render({ mutation, data, error, loading })
+    }
   </Mutation>
 )
 
 const AuthContainer = adopt({
-
   signup,
   login,
   logout
-
 })
 
 export default AuthContainer

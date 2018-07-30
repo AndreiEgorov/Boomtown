@@ -1,8 +1,6 @@
 import React from 'react'
 import { withStyles, Grid } from '@material-ui/core'
-
 import styles from './styles'
-
 import ShareItemForm from './../../components/ShareItemForm/ShareItemForm'
 // import ShareItemPreview from '../../redux/modules/ShareItemPreview';
 import ShareItemCard from './../../components/ShareItemForm/ShareItemCard'

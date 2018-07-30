@@ -1,19 +1,14 @@
 import { withStyles } from '@material-ui/core/styles'
 import React from 'react'
-
-import Bar from './bar'
-
 import styles from './styles'
-
 import ItemsContainer from '../../containers/ItemsContainer'
 import HeaderBar from '../../components/HeaderBar'
 import ItemCard from '../../components/ItemCard'
-
 import Grid from '@material-ui/core/Grid'
 
 const Items = ({ classes }) => {
   return (
-    <div >
+    <div>
       <HeaderBar />
 
       <Grid
@@ -29,20 +24,21 @@ const Items = ({ classes }) => {
             const items = data.items
             return (
               <div className={classes.boxOfCards}>
-            {items.map((item, index) => (
-              <Grid
-                key={index}
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                lg={4}
-                className={classes.cardCell}
-              >
-                <ItemCard item={item} />
-              </Grid>
-            ))}
-            </div>)
+                {items.map((item, index) => (
+                  <Grid
+                    key={index}
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    lg={4}
+                    className={classes.cardCell}
+                  >
+                    <ItemCard item={item} />
+                  </Grid>
+                ))}
+              </div>
+            )
           }}
         </ItemsContainer>
       </Grid>
