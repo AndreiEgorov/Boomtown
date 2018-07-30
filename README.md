@@ -21,7 +21,7 @@
         Postico app(for UI of database)
         * Dev dependencies: nodemon and jest-cli
 
-    -Client:
+     - Client:
         React.js
         Redux.js
         Material UI
