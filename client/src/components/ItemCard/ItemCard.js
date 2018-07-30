@@ -18,6 +18,8 @@ import BorrowButton from './BorrowButton'
 import Gravatar from 'react-gravatar'
 import moment from 'moment'
 
+// import { ViewerContext } from './../../context/ViewerProvider'
+
 const styles = theme => ({
   
   card: {
@@ -36,10 +38,23 @@ const styles = theme => ({
   }
 })
 
+
+
 const ItemCard = ({ classes, item }) => {
-  console.log(item)
+  // console.log(item)
+
+
+
+  //uncomment it later!!!
+
+// item.itemowner = {
+//   email:'bob@email.com'
+// }
+
 
   return (
+
+  
     <div >
       <Card className={classes.card}>
         <CardMedia
@@ -76,6 +91,9 @@ const ItemCard = ({ classes, item }) => {
         <BorrowButton />
       </Card>
     </div>
+
+
+
   )
 }
 
