@@ -19,8 +19,7 @@ import ItemCard from './../../ItemCard/'
 
 // import { ViewerContext } from '../../../context/ViewerProvider'
 
-
-import {connect} from 'react-redux';
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   card: {
@@ -37,7 +36,7 @@ const styles = theme => ({
     backgroundColor: red[500]
   }
 })
-
+//passing initial props before connecting to redux.(keep this comment for future reference)
 // const item = {
 //   itemwoner: {
 //     fullname: 'Item Owner Name'
@@ -47,57 +46,16 @@ const styles = theme => ({
 //   description: 'Describe your item'
 // }
 
-const ShareItemCard =(props) => {
-  return(
-    <ItemCard item={props.shareItemPreview} />
-  )
+const ShareItemCard = props => {
+  return <ItemCard item={props.shareItemPreview} />
 }
-
-
-
-
-
-
-
-
-// const ShareItemCard = ({ classes, item }) => {
-//   return (
-//     <div>
-//       <Card className={classes.card}>
-//         <CardMedia
-//           className={classes.media}
-//           image="/static/images/cards/paella.jpg"
-//           title="Contemplative Reptile"
-//         />
-
-//         <CardHeader
-//           avatar={
-//             <Avatar aria-label="Recipe" className={classes.avatar}>
-//               R
-//             </Avatar>
-//           }
-//           title="Shrimp and Chorizo Paella"
-//           subheader="September 14, 2016"
-//         />
-
-//         <CardContent>
-//           <Typography variant="title">{''}</Typography>
-//           <Typography variant="body1">{''}</Typography>
-//           <Typography variant="subheading">{''}</Typography>
-//         </CardContent>
-//         <BorrowButton />
-//       </Card>
-//     </div>
-//   )
-// }
 
 ShareItemCard.propTypes = {
   classes: PropTypes.object.isRequired
 }
 const mapStateToProps = state => {
   return {
-    shareItemPreview: state.shareItemPreview,
-
+    shareItemPreview: state.shareItemPreview
   }
 }
 

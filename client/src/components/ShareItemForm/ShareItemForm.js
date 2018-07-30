@@ -1,5 +1,4 @@
 import React, { Fragment, Component } from 'react'
-
 import { FormSpy, Form, Field } from 'react-final-form'
 import { connect } from 'react-redux'
 import ItemsContainer from '../../containers/ItemsContainer'
@@ -7,47 +6,27 @@ import {
   MenuItem,
   Select,
   Checkbox,
-  Button,
-  
-
+  Button
 } from '../../../node_modules/@material-ui/core'
 import Menu from '@material-ui/core/Menu'
 import Lable from '@material-ui/core/FormLabel'
-
 import ShareItemCard from './ShareItemCard'
-import ShareButton from './ShareButton/ShareButton'
-import SelectImageButton from './SelectImageButton/SelectImageButton'
 import {
   resetImage,
   updateNewItem,
   resetNewItem
 } from './../../redux/modules/ShareItemPreview'
-import { withStyles } from '@material-ui/core/styles';
-// import styles from './styles'
-
-
-
-
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
-
-
-  test:{
-    background:"green"
+  test: {
+    background: 'green'
   }
 })
-
-
-
-
-
-
-
 const validate = values => {}
 const onSubmit = values => {
   console.log(values.itemName)
 }
-
 class ShareItemForm extends Component {
   constructor(props) {
     super(props)
@@ -124,7 +103,7 @@ class ShareItemForm extends Component {
   }
 
   dispatchUpdate(values, tags, updateNewItem) {
-    //convert an image in
+    //convert an image in Base 64
     if (!values.imageurl && this.state.fileSelected) {
       this.getBase64Url().then(imageurl => {
         updateNewItem({
@@ -151,8 +130,8 @@ class ShareItemForm extends Component {
   render() {
     const { resetImage, updateNewItem, resetNewItem } = this.props
     const { fileSelected } = this.state
-    const  {classes} = this.props
-   
+    const { classes } = this.props
+
     return (
       <ItemsContainer className={classes.test}>
         {({ addItem, tagData: { tags, loading, error } }) => {
@@ -162,7 +141,7 @@ class ShareItemForm extends Component {
           return (
             <div>
               <h1>Share. Borrow. Prosper.</h1>
-              <SelectImageButton />
+
               <Form
                 onSubmit={values => {
                   this.saveItem(values, tags, addItem)
@@ -191,10 +170,6 @@ class ShareItemForm extends Component {
                                   (this.fileRef.current.value = ''),
                                   this.props.resetImage())
                                 : this.fileRef.current.click()
-
-                              //TODO if i clikc and there is an iage
-                              //selected already clear the image from the state
-                              //and start over
                             }}
                           >
                             {' '}
@@ -255,7 +230,6 @@ class ShareItemForm extends Component {
                                 this.state.selectedTags.indexOf(tag.id) > -1
                               }
                             />
-                            {/* <ListItemText primary={tag.title} /> */}
                             {tag.title}
                           </MenuItem>
                         ))}
@@ -264,7 +238,6 @@ class ShareItemForm extends Component {
                   </form>
                 )}
               />
-              <ShareButton />
             </div>
           )
         }}
@@ -288,5 +261,5 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   undefined,
-  mapDispatchToProps 
+  mapDispatchToProps
 )(withStyles(styles)(ShareItemForm))
