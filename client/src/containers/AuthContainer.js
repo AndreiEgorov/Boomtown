@@ -36,7 +36,7 @@ const login = ({ render }) => {
   )
 }
 
-const logout = ({ render }) => (
+ const logout = ({ render }) => (
   <Mutation mutation={LOGOUT_MUTATION} onCompleted={() => client.resetStore()}>
     {(mutation, { data, error, loading }) =>
       render({ mutation, data, error, loading })

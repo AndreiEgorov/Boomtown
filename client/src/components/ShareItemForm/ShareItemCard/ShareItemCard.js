@@ -17,7 +17,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import BorrowButton from './../../ItemCard/BorrowButton'
 import ItemCard from './../../ItemCard/'
 
-// import { ViewerContext } from '../../../context/ViewerProvider'
 
 import { connect } from 'react-redux'
 

@@ -50,7 +50,7 @@ Commands must be run from the `server` directory:
 `npm run start:dev --prefix server`
 
 ## Client
-
+`npm run start --prefix client`
 Commands must be run from the `client` directory:
 
 ### Installation

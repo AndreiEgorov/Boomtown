@@ -66,7 +66,7 @@ module.exports = function(app) {
       }
     },
 
-    logout({ parent, args, context }) {
+    logout(parent, args, context) {
       context.req.res.clearCookie(app.get('JWT_COOKIE_NAME'))
       return true
     }

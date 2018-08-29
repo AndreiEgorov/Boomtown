@@ -6,6 +6,7 @@ import Fade from '@material-ui/core/Fade'
 import IconButton from '@material-ui/core/IconButton'
 import MoreVert from '@material-ui/icons/MoreVert'
 import { Link } from 'react-router-dom'
+import AuthContainer from './../../containers/AuthContainer'
 
 class MenuButton extends React.Component {
   state = {
@@ -41,7 +42,16 @@ class MenuButton extends React.Component {
           TransitionComponent={Fade}
         >
           <MenuItem onClick={this.handleClose} component={Link} to="/profile" > Your Profile</MenuItem>
-          <MenuItem onClick={this.handleClose} component={Link} to="/welcome">Sign Out</MenuItem>
+          {/* <MenuItem onClick={this.handleClose} component={Link} to="/welcome">Sign Out</MenuItem> */}
+          <AuthContainer>
+
+
+                  {({ logout }) => {
+                 return (<MenuItem onClick={() => {logout.mutation()}}>Sign Out</MenuItem>)
+                  }
+                    
+                  }
+          </AuthContainer>
         
         </Menu>
       </div>
