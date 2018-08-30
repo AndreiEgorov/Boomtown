@@ -21,14 +21,11 @@ import moment from 'moment'
 // import { ViewerContext } from './../../context/ViewerProvider'
 
 const styles = theme => ({
-  
   card: {
-    textAlign: 'left',
-    maxWidth: "400px",
-    
+    textAlign: 'left'
+    // maxWidth: "400px",
   },
   media: {
-    
     height: 0,
     paddingTop: '56.25%', // 16:9
     backgroundColor: 'blue'
@@ -39,47 +36,32 @@ const styles = theme => ({
   }
 })
 
-
-
 const ItemCard = ({ classes, item }) => {
   // console.log(item)
 
-
-
-
-// item.itemowner = {
-//   email:'bob@email.com'
-// }
-
+  // item.itemowner = {
+  //   email:'bob@email.com'
+  // }
 
   return (
-
-  
-    <div >
+    <div>
       <Card className={classes.card}>
-        <CardMedia
-          className={classes.media} 
-          image={item.imageurl}
-          
-        />
+        <CardMedia className={classes.media} image={item.imageurl} />
         <CardHeader
           avatar={
-            <Gravatar className={classes.avatar} email={item.itemowner.email} 
-            title={item.itemowner.fullname}
-          subheader={moment(new Date(item.created)).fromNow()}
-          className={classes.header}
-          default="monsterid" 
+            <Gravatar
+              className={classes.avatar}
+              email={item.itemowner.email}
+              title={item.itemowner.fullname}
+              subheader={moment(new Date(item.created)).fromNow()}
+              className={classes.header}
+              default="monsterid"
             />
-            
           }
           title={item.itemowner.fullname}
           subheader={moment(new Date(item.created)).fromNow()}
           className={classes.header}
         />
-
-
-
-
 
         <CardContent>
           <Typography variant="title">{item.title}</Typography>
@@ -91,14 +73,7 @@ const ItemCard = ({ classes, item }) => {
         <BorrowButton />
       </Card>
     </div>
-
-
-
   )
-}
-
-ItemCard.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(ItemCard)

@@ -16,8 +16,6 @@ function BorrowButton(props) {
   );
 }
 
-BorrowButton.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+
 
 export default withStyles(styles)(BorrowButton);

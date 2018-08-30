@@ -17,16 +17,17 @@ import {
   resetNewItem
 } from './../../redux/modules/ShareItemPreview'
 import { withStyles } from '@material-ui/core/styles'
-
-const styles = theme => ({
-  test: {
-    background: 'green'
-  }
-})
+import styles from './styles'
+// const styles = theme => ({
+//   test: {
+//     color: 'green'
+//   }
+// })
 const validate = values => {}
 const onSubmit = values => {
   console.log(values.itemName)
 }
+const required = value => (value ? undefined : "Required");
 class ShareItemForm extends Component {
   constructor(props) {
     super(props)
@@ -34,7 +35,8 @@ class ShareItemForm extends Component {
       fileSelected: false,
       imageurl: '',
       selectedTags: [],
-      submitted: false
+      submitted: false,
+      message: ''
     }
     this.fileRef = React.createRef()
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -139,8 +141,10 @@ class ShareItemForm extends Component {
           if (error) return '...error'
           console.log('Andrei add item', addItem)
           return (
-            <div>
-              <h1>Share. Borrow. Prosper.</h1>
+            <div className={classes.shareFormInputView}>
+              <h1 className={classes.shareFormInputViewTitle}>
+                Share. Borrow. Prosper.
+              </h1>
 
               <Form
                 onSubmit={values => {
@@ -160,10 +164,12 @@ class ShareItemForm extends Component {
                       }}
                     />
 
-                    <Field name="imageurl">
+                    <Field 
+                   
+                    name="imageurl">
                       {(input, meta) => (
                         <Fragment>
-                          <Button
+                          <Button className={classes.uploadButton}
                             onClick={() => {
                               fileSelected
                                 ? (this.setState({ fileSelected: false }),
@@ -172,10 +178,7 @@ class ShareItemForm extends Component {
                                 : this.fileRef.current.click()
                             }}
                           >
-                            {' '}
-                            {fileSelected
-                              ? 'Reset Image'
-                              : 'Upload an Image'}{' '}
+                            {fileSelected ? 'Reset Image' : 'Upload an Image'}
                           </Button>
                           <input
                             onChange={e => this.handleImageSelect(e)}
@@ -189,10 +192,11 @@ class ShareItemForm extends Component {
                     </Field>
 
                     <Field
+                       validate={required}
                       name="title"
                       render={({ input, meta }) => (
                         <div>
-                          <input {...input} placeholder="Name your Item" />
+                          <input {...input} className={classes.itemNameInput} placeholder="Name your Item" />
                           {meta.touched &&
                             meta.error && <span>{meta.error}</span>}
                         </div>
@@ -200,11 +204,13 @@ class ShareItemForm extends Component {
                     />
 
                     <Field
+                     validate={required}
                       name="description"
                       render={({ input, meta }) => (
                         <div>
                           <textarea
                             {...input}
+                            className={classes.itemDescriptionInput}
                             placeholder="Describe your Item"
                           />
                           {meta.touched &&
@@ -212,9 +218,11 @@ class ShareItemForm extends Component {
                         </div>
                       )}
                     />
+                    <div className={classes.selectAndLableContainer}>
                     <Lable>Add some tags</Lable>
-
+                  
                     <Select
+                     
                       multiple
                       value={this.state.selectedTags}
                       onChange={e => this.handleCheckbox(e)}
@@ -222,10 +230,12 @@ class ShareItemForm extends Component {
                         return this.generateTagsText(tags, selected)
                       }}
                     >
+                    
                       {tags &&
                         tags.map(tag => (
                           <MenuItem key={tag.id} value={tag.id}>
                             <Checkbox
+                            
                               checked={
                                 this.state.selectedTags.indexOf(tag.id) > -1
                               }
@@ -233,8 +243,23 @@ class ShareItemForm extends Component {
                             {tag.title}
                           </MenuItem>
                         ))}
+                  
                     </Select>
-                    <input type="submit" value="Share" />
+                   
+                    </div>
+                    <Button
+                    color="primary"
+                    type="submit"
+                    variant="contained"
+                    disabled = {pristine||invalid}
+                    onClick={() => this.setState({
+                      message: "Thank you for sharing your item."
+                    })}
+                    >
+                    SHARE
+                    </Button>
+                    <p>{this.state.message}</p>
+                    {/* <input type="submit" value="Share" /> */}
                   </form>
                 )}
               />

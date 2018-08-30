@@ -1,19 +1,34 @@
 const styles = theme => ({
-  card: {
-    maxHeight: '730.32',
-    height: '100%',
-    justify: 'space-between'
+  // headerBar:{
+  //   height: 200
+  // },
+
+  componentsOuterWrapper: {
+    padding: 160,
+    paddingTop: 80
   },
-  sharePageGrid: {
-    marginTop: 20,
-    flexWrap: 'wrap',
-    flexGrow: 1,
-    background: '#ffffff',
-    padding: 0,
-    height: '100%',
-    padding: '160px',
-    paddingTop: '80px'
+  componentsInnerWrapper: {
+    height: 700,
+   
+    justifyContent: "space-around"
+  },
+  shareItemCardWrapper: {
+    
+    flexBasis: "48%",
+    height: 550,
+    maxWidth: 425
+  },
+  shareItemFormWrapper: {
+    
+    display: "flex",
+    alignItems: "center",
+    flexBasis: "48%",
+    height: 550,
+    maxWidth: 425
+
+    
   }
+
 })
 
 export default styles

@@ -26,13 +26,12 @@ class MenuButton extends React.Component {
 
     return (
       <div>
-      
-
-
         <IconButton color="inherit" aria-label="Menu">
-          <MoreVert aria-owns={anchorEl ? 'fade-menu' : null}
-          aria-haspopup="true"
-          onClick={this.handleClick} />
+          <MoreVert
+            aria-owns={anchorEl ? 'fade-menu' : null}
+            aria-haspopup="true"
+            onClick={this.handleClick}
+          />
         </IconButton>
         <Menu
           id="fade-menu"
@@ -41,18 +40,24 @@ class MenuButton extends React.Component {
           onClose={this.handleClose}
           TransitionComponent={Fade}
         >
-          <MenuItem onClick={this.handleClose} component={Link} to="/profile" > Your Profile</MenuItem>
+          <MenuItem onClick={this.handleClose} component={Link} to="/profile">
+            {' '}
+            Your Profile
+          </MenuItem>
           {/* <MenuItem onClick={this.handleClose} component={Link} to="/welcome">Sign Out</MenuItem> */}
           <AuthContainer>
-
-
-                  {({ logout }) => {
-                 return (<MenuItem onClick={() => {logout.mutation()}}>Sign Out</MenuItem>)
-                  }
-                    
-                  }
+            {({ logout }) => {
+              return (
+                <MenuItem
+                  onClick={() => {
+                    logout.mutation()
+                  }}
+                >
+                  Sign Out
+                </MenuItem>
+              )
+            }}
           </AuthContainer>
-        
         </Menu>
       </div>
     )

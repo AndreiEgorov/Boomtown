@@ -11,20 +11,37 @@ class Share extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.sharePageWrapper}>
-        <HeaderBar />
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          className={classes.sharePageGrid}
-        >
-          <Grid item xs={6}>
-            <ShareItemCard />
+        <HeaderBar className={classes.headerBar} />
+
+        <div className={classes.componentsOuterWrapper}>
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            className={classes.componentsInnerWrapper}
+            // className={classes.sharePageGrid}
+          >
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              className={classes.shareItemCardWrapper}
+            >
+              <ShareItemCard />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              className={classes.shareItemFormWrapper}
+            >
+              <ShareItemForm />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <ShareItemForm />
-          </Grid>
-        </Grid>
+        </div>
       </div>
     )
   }

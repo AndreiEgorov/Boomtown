@@ -17,7 +17,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import BorrowButton from './../../ItemCard/BorrowButton'
 import ItemCard from './../../ItemCard/'
 
-
 import { connect } from 'react-redux'
 
 const styles = theme => ({
@@ -33,7 +32,11 @@ const styles = theme => ({
 
   avatar: {
     backgroundColor: red[500]
+  },
+  test:{
+    background:"blue"
   }
+
 })
 //passing initial props before connecting to redux.(keep this comment for future reference)
 // const item = {
@@ -45,13 +48,15 @@ const styles = theme => ({
 //   description: 'Describe your item'
 // }
 
+
 const ShareItemCard = props => {
-  return <ItemCard item={props.shareItemPreview} />
+  return (
+    <div>
+      <ItemCard item={props.shareItemPreview} />
+    </div>
+  )
 }
 
-ShareItemCard.propTypes = {
-  classes: PropTypes.object.isRequired
-}
 const mapStateToProps = state => {
   return {
     shareItemPreview: state.shareItemPreview
