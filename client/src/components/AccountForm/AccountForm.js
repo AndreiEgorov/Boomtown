@@ -144,7 +144,7 @@ class AccountForm extends Component {
                             className={classes.formToggle}
                             type="button"
                             onClick={() => {
-                              // @TODO: Reset the form on submit
+                              //Reset the form on submit
                               this.setState({
                                 formToggle: !this.state.formToggle
                               })
@@ -158,7 +158,7 @@ class AccountForm extends Component {
                       </Grid>
                     </FormControl>
                     <Typography className={classes.errorMessage}>
-                      {/* @TODO: Display sign-up and login errors */}
+                      {/*  Display sign-up and login errors */}
                     </Typography>
                   </form>
                 )

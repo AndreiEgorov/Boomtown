@@ -25,9 +25,9 @@ import styles from './styles'
 // })
 const validate = values => {}
 const onSubmit = values => {
-  console.log(values.itemName)
+  
 }
-const required = value => (value ? undefined : "Required");
+const required = value => (value ? undefined : 'Required')
 class ShareItemForm extends Component {
   constructor(props) {
     super(props)
@@ -139,7 +139,7 @@ class ShareItemForm extends Component {
         {({ addItem, tagData: { tags, loading, error } }) => {
           if (loading) return '...loading'
           if (error) return '...error'
-          console.log('Andrei add item', addItem)
+         
           return (
             <div className={classes.shareFormInputView}>
               <h1 className={classes.shareFormInputViewTitle}>
@@ -149,7 +149,7 @@ class ShareItemForm extends Component {
               <Form
                 onSubmit={values => {
                   this.saveItem(values, tags, addItem)
-                  console.log('Andrei', values, addItem)
+           
                 }}
                 //  validate={}
                 render={({ handleSubmit, pristine, invalid, values }) => (
@@ -164,12 +164,11 @@ class ShareItemForm extends Component {
                       }}
                     />
 
-                    <Field 
-                   
-                    name="imageurl">
+                    <Field name="imageurl">
                       {(input, meta) => (
                         <Fragment>
-                          <Button className={classes.uploadButton}
+                          <Button
+                            className={classes.uploadButton}
                             onClick={() => {
                               fileSelected
                                 ? (this.setState({ fileSelected: false }),
@@ -192,11 +191,15 @@ class ShareItemForm extends Component {
                     </Field>
 
                     <Field
-                       validate={required}
+                      validate={required}
                       name="title"
                       render={({ input, meta }) => (
                         <div>
-                          <input {...input} className={classes.itemNameInput} placeholder="Name your Item" />
+                          <input
+                            {...input}
+                            className={classes.itemNameInput}
+                            placeholder="Name your Item"
+                          />
                           {meta.touched &&
                             meta.error && <span>{meta.error}</span>}
                         </div>
@@ -204,7 +207,7 @@ class ShareItemForm extends Component {
                     />
 
                     <Field
-                     validate={required}
+                      validate={required}
                       name="description"
                       render={({ input, meta }) => (
                         <div>
@@ -219,44 +222,41 @@ class ShareItemForm extends Component {
                       )}
                     />
                     <div className={classes.selectAndLableContainer}>
-                    <Lable>Add some tags</Lable>
-                  
-                    <Select
-                     
-                      multiple
-                      value={this.state.selectedTags}
-                      onChange={e => this.handleCheckbox(e)}
-                      renderValue={selected => {
-                        return this.generateTagsText(tags, selected)
-                      }}
-                    >
-                    
-                      {tags &&
-                        tags.map(tag => (
-                          <MenuItem key={tag.id} value={tag.id}>
-                            <Checkbox
-                            
-                              checked={
-                                this.state.selectedTags.indexOf(tag.id) > -1
-                              }
-                            />
-                            {tag.title}
-                          </MenuItem>
-                        ))}
-                  
-                    </Select>
-                   
+                      <Lable>Add some tags</Lable>
+
+                      <Select
+                        multiple
+                        value={this.state.selectedTags}
+                        onChange={e => this.handleCheckbox(e)}
+                        renderValue={selected => {
+                          return this.generateTagsText(tags, selected)
+                        }}
+                      >
+                        {tags &&
+                          tags.map(tag => (
+                            <MenuItem key={tag.id} value={tag.id}>
+                              <Checkbox
+                                checked={
+                                  this.state.selectedTags.indexOf(tag.id) > -1
+                                }
+                              />
+                              {tag.title}
+                            </MenuItem>
+                          ))}
+                      </Select>
                     </div>
                     <Button
-                    color="primary"
-                    type="submit"
-                    variant="contained"
-                    disabled = {pristine||invalid}
-                    onClick={() => this.setState({
-                      message: "Thank you for sharing your item."
-                    })}
+                      color="primary"
+                      type="submit"
+                      variant="contained"
+                      disabled={pristine || invalid}
+                      onClick={() =>
+                        this.setState({
+                          message: 'Thank you for sharing your item.'
+                        })
+                      }
                     >
-                    SHARE
+                      SHARE
                     </Button>
                     <p>{this.state.message}</p>
                     {/* <input type="submit" value="Share" /> */}
