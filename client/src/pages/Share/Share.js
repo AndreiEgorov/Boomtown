@@ -19,7 +19,6 @@ class Share extends React.Component {
             justify="center"
             alignItems="center"
             className={classes.componentsInnerWrapper}
-            // className={classes.sharePageGrid}
           >
             <Grid
               item

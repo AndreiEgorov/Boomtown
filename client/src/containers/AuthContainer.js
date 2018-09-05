@@ -10,7 +10,6 @@ import {
 } from '../apollo/queries'
 
 const signup = ({ render }) => {
-  console.log('hi')
   return (
     <Mutation
       mutation={SIGNUP_MUTATION}
@@ -36,7 +35,7 @@ const login = ({ render }) => {
   )
 }
 
- const logout = ({ render }) => (
+const logout = ({ render }) => (
   <Mutation mutation={LOGOUT_MUTATION} onCompleted={() => client.resetStore()}>
     {(mutation, { data, error, loading }) =>
       render({ mutation, data, error, loading })

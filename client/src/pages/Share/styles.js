@@ -1,7 +1,4 @@
 const styles = theme => ({
-  // headerBar:{
-  //   height: 200
-  // },
 
   componentsOuterWrapper: {
     padding: 160,
@@ -9,26 +6,21 @@ const styles = theme => ({
   },
   componentsInnerWrapper: {
     height: 700,
-   
-    justifyContent: "space-around"
+
+    justifyContent: 'space-around'
   },
   shareItemCardWrapper: {
-    
-    flexBasis: "48%",
+    flexBasis: '48%',
     height: 550,
     maxWidth: 425
   },
   shareItemFormWrapper: {
-    
-    display: "flex",
-    alignItems: "center",
-    flexBasis: "48%",
+    display: 'flex',
+    alignItems: 'center',
+    flexBasis: '48%',
     height: 550,
     maxWidth: 425
-
-    
   }
-
 })
 
 export default styles

@@ -7,12 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import ItemsContainer from '../../containers/ItemsContainer'
 import Typography from '@material-ui/core/Typography'
 import Gravatar from 'react-gravatar'
-import moment from 'moment'
-import {
-  CardHeader,
-  Card,
-  Avatar
-} from '../../../node_modules/@material-ui/core'
+import { Card, Avatar } from '../../../node_modules/@material-ui/core'
 
 const Profile = ({ classes }) => {
   return (

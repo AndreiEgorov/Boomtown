@@ -3,12 +3,10 @@ const styles = theme => ({
     backgroundColor: '#212121',
     padding: '80px',
     justifyContent: 'flex-start'
-    // display: "flex",
-    // justifyContent:"center",
   },
-  boxOfCards:{
-    display: "flex",
-    flexWrap: "wrap",
+  boxOfCards: {
+    display: 'flex',
+    flexWrap: 'wrap'
   },
   cardCell: {
     padding: '12px'
