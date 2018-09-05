@@ -16,7 +16,6 @@ pgResource = pgResource(postgres)
 const initApollo = require('./config/apollo')
 initApollo({ app, pgResource })
 
-
 postgres.on('error', (err, client) => {
   console.error('Unexpected error on idle postgres client', err)
   process.exit(-1)
@@ -26,11 +25,10 @@ const server = app.listen(PORT, () => {
   console.log(`>>\x1b[35m Express running:\x1b[0m http://localhost:${PORT}`)
 
   // Initialize Apollo Server
-   
+
   console.log(
     `>>\x1b[36m Graphql playground:\x1b[0m http://localhost:${PORT}/graphql`
   )
-
 })
 
 server.on('error', err => {

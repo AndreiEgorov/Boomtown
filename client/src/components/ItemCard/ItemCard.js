@@ -5,7 +5,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import red from '@material-ui/core/colors/red'
 import BorrowButton from './BorrowButton'
 import Gravatar from 'react-gravatar'
 import moment from 'moment'
@@ -20,9 +19,6 @@ const styles = theme => ({
     backgroundColor: 'blue'
   },
 
-  avatar: {
-    backgroundColor: red[500]
-  }
 })
 
 const ItemCard = ({ classes, item }) => {
@@ -39,7 +35,7 @@ const ItemCard = ({ classes, item }) => {
         <CardHeader
           avatar={
             <Gravatar
-              className={classes.avatar}
+       
               email={item.itemowner.email}
               title={item.itemowner.fullname}
               subheader={moment(new Date(item.created)).fromNow()}

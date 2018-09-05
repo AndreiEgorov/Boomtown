@@ -12,7 +12,7 @@ const styles = theme => ({
     minHeight: '40px',
     border: '1px solid rgba(0, 0, 0, 0.23)',
     boxShadow: 'none',
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
     '&:hover': {
       backgroundColor: '#d5d5d5'
     }

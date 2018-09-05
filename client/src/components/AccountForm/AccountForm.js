@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import { Form, Field } from 'react-final-form'
 
 import AuthContainer from '../../containers/AuthContainer'
-import validate from './helpers/validation'
+// import validate from './helpers/validation'
 
 import styles from './styles'
 
@@ -43,8 +43,8 @@ class AccountForm extends Component {
     if (!values.password) {
       errors.password = 'Required'
     }
-
-    return errors, console.log(errors)
+    // console.log(errors)
+    return errors
   }
   render() {
     const { classes } = this.props

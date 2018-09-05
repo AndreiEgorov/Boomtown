@@ -36,7 +36,7 @@ module.exports = function(postgres) {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE email LIKE $1', 
+        text: 'SELECT * FROM users WHERE email LIKE $1',
         values: [email]
       }
       try {

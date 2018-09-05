@@ -8,9 +8,9 @@ import {
   Checkbox,
   Button
 } from '../../../node_modules/@material-ui/core'
-import Menu from '@material-ui/core/Menu'
+
 import Lable from '@material-ui/core/FormLabel'
-import ShareItemCard from './ShareItemCard'
+
 import {
   resetImage,
   updateNewItem,
@@ -23,10 +23,8 @@ import styles from './styles'
 //     color: 'green'
 //   }
 // })
-const validate = values => {}
-const onSubmit = values => {
-  
-}
+// const validate = values => {}
+// const onSubmit = values => {}
 const required = value => (value ? undefined : 'Required')
 class ShareItemForm extends Component {
   constructor(props) {
@@ -130,7 +128,8 @@ class ShareItemForm extends Component {
   }
 
   render() {
-    const { resetImage, updateNewItem, resetNewItem } = this.props
+    // const { resetImage, updateNewItem, resetNewItem } = this.props
+    const { updateNewItem } = this.props
     const { fileSelected } = this.state
     const { classes } = this.props
 
@@ -139,7 +138,7 @@ class ShareItemForm extends Component {
         {({ addItem, tagData: { tags, loading, error } }) => {
           if (loading) return '...loading'
           if (error) return '...error'
-         
+
           return (
             <div className={classes.shareFormInputView}>
               <h1 className={classes.shareFormInputViewTitle}>
@@ -149,7 +148,6 @@ class ShareItemForm extends Component {
               <Form
                 onSubmit={values => {
                   this.saveItem(values, tags, addItem)
-           
                 }}
                 //  validate={}
                 render={({ handleSubmit, pristine, invalid, values }) => (
